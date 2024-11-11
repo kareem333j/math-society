@@ -34,7 +34,7 @@ import NotificationsAdmin from "./component/admin/dashboard/pages/Notifications"
 import NotificationProvider from "./context/NotificationsContext";
 
 function App() {
-  const [isDark, setIsDark] = useLocalStorage("isDark", false);
+  const [isDark, setIsDark] = useLocalStorage("isDark", true);
   const [dataProfile, setDataProfile] = useState({
     isAuthenticated: false,
     profile: null,
