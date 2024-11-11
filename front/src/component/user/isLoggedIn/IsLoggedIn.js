@@ -78,7 +78,7 @@ function IsLoggedIn(props) {
                                     right: 14,
                                     width: 10,
                                     height: 10,
-                                    bgcolor: 'background.paper',
+                                    bgcolor: 'var(--color-dark-1)',
                                     transform: 'translateY(-50%) rotate(45deg)',
                                     zIndex: 0,
                                 },
