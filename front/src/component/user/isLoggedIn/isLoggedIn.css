@@ -1,0 +1,110 @@
+.welcome-msg{
+    font-size: 0.9em;
+    padding: 5px 10px;
+}
+
+.avatar{
+    background-color: gray !important;
+    position: relative !important;
+    overflow: hidden;
+    width: 40px !important;
+    height: 40px !important;
+}
+.avatar::after{
+    content: attr(data-content);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: gray;
+    border-radius: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.notificationIcon svg path{
+    fill:var(--color-default2);
+}
+.notificationIcon svg{
+    width: 25px !important;
+    height: 25px !important;
+} 
+#menu-appbar{
+    overflow-y: hidden;
+}
+.notification-list .css-ft4jij-MuiDivider-root{
+    /* border-color: var(--color-default-50); */
+    border: 0;
+    padding: 0.04px;
+    background-color: var(--color-default-50);
+}
+.notification-list hr{
+    padding: 0;
+    margin: 0;
+    width: 90%;
+    margin: auto;
+}
+.notification-list li{
+    cursor: pointer;
+}
+.notification-list li:hover,
+.notification-list a:hover,
+.notification-item:hover{
+    background-color: var(--notifications-hover) !important;
+}
+.notification-text span{
+    font-weight: bold;
+    color: var(--color-default2);
+}
+.notification-text span,
+.notification-text p{
+    direction: rtl;
+    text-align: start;
+}
+.notification-box .div-menu{
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+.notification-box ul{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    top: var(--navbar-height);
+    right: 0;
+    width: 350px;
+    background-color: var(--color-dark-1);
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    /* position: relative; */
+}
+
+#notification-menu .options{
+    position: fixed;
+    bottom: 0 !important;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    border-top: 1px solid var(--color-default-40);
+}
+#notification-menu .options button{
+    background-color: transparent;
+    border: 0;
+    color: var(--color-default2);
+    font-size: 0.9em;
+    opacity: 0.95;
+}
+#notification-menu .options button:hover{
+    text-decoration: underline;
+    opacity: 1;
+}
+
+@media (max-width:768px) {
+    .avatar{
+        width: 35px !important;
+        height: 35px !important;
+    }
+}

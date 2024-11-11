@@ -1,0 +1,278 @@
+.path p{
+    color: var(--color-default-50);
+    font-weight: bold;
+}
+.path a{
+    color: var(--red-light2);
+    font-size: 1.1em;
+}
+.path .symbol{
+    color: var(--color-default-50);
+}
+
+.dash-area{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    padding-top: 20px;
+    background-color: var(--color-dark-2);
+    overflow: hidden;
+}
+#admin-main-btn1{
+    background-color: var(--red-light2);
+    font-size: 1em;
+}
+
+.options-btn{
+    width: 33px;
+    height: 33px;
+}
+.custom-edit-button{
+    background: var(--fill-button-gradient) !important;
+}
+.custom-delete-button{
+    background: var(--red-error) !important;
+}
+.options-btn svg{
+    width: 20px;
+    height: 20px;
+}
+.options-btn svg path{
+    fill: #fff;
+}
+
+/* course pages */
+.add-course-div{
+    background-color: var(--color-dark-1);
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    margin-block: 3rem;
+    padding: 15px 0;
+    justify-content: start;
+    align-items: center;
+}
+.add-course-div .title{
+    font-size: 1.6em;
+    font-weight: bold;
+    color: var(--color-default2);
+}
+.admin-field{
+    border-color: #fff;
+    width: 100%;
+    direction: rtl !important;
+    margin: 5px !important;
+}
+.admin-field p{
+    color: var(--color-default2);
+}
+.input-div input, .input-div textarea,.admin-field #demo-simple-select-required{
+    width: 100%;
+    color: var(--color-default2) !important;
+}
+.admin-field svg path{
+    fill: var(--color-default2);
+}
+#outlined-basic{
+    color: var(--color-default2) !important;
+}
+.admin-field fieldset, .admin-field label,
+.admin-field .menu-select-item{
+    border-color: var(--input-border);
+    color: var(--input-label) !important;
+}
+.admin-field label.Mui-focused{
+    color: var(--tw-gradient-from) !important;
+}
+
+.admin-field:hover .MuiOutlinedInput-notchedOutline,
+.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
+.css-1q6at85-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
+.css-dpjnhs-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
+.css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused .MuiOutlinedInput-notchedOutline
+{
+    border-color: var(--tw-gradient-from) !important;
+}
+.inputs-row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 !important;
+}
+.input-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 !important;
+}
+.general-div-inputs .switch-buttons label{
+    margin: 0;
+    direction: ltr;
+    color: var(--color-default2);
+    gap: 20px;
+    width: 100%;
+    justify-content: space-between;
+}
+.general-div-inputs .switch-buttons label span{
+    font-size: 1.3em;
+}
+.general-div-inputs .switch-buttons label .MuiSwitch-root{
+    margin: 0;
+}
+
+
+
+
+
+.course-test-img{
+    cursor: pointer;
+    position: relative;
+}
+.course-test-img img{
+    border: 3px dotted var(--color-default-50);
+    z-index: 333;
+}
+.course-test-img input{
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.course-test-img .more-info{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-default-50);
+    font-size: 1.3em;
+    z-index: 0;
+}
+.course-test-img .more-info svg{
+    width: 40px;
+    height: 40px;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 991px) {
+    .course-from-with-card{
+        flex-direction: column-reverse;
+    }
+    .general-div-inputs{
+        margin-top: 20px !important;
+    }
+}
+
+
+
+
+.admin-search svg path{
+    fill: var(--color-default2);
+}
+.admin-search .css-aoffql{
+    width: 100%;
+    margin: auto;
+    background-color: var(--color-dark-1);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.admin-search .css-aoffql:hover{
+    background-color: var(--color-dark-02);
+}
+
+
+
+#payment-table{
+    width: 100%;
+    border-collapse: separate;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 1em;
+}
+#payment-table thead .head span {
+    border-bottom: 3px solid var(--red-light);
+    padding-bottom: 5px;
+}
+
+#payment-table tr {
+    margin-bottom: 20px !important;
+    border-radius: 35px !important;
+}
+
+#payment-table th,
+#payment-table td {
+    padding: 5px;
+    color: var(--color-default2);
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid var(--text-cyan-700);
+}
+
+#payment-table th{
+    background-color: var(--text-cyan-700);
+    color: #fff;
+    font-weight: bold;
+}
+.admin-courses .dropdown-menu{
+    right: 0 !important;
+} 
+
+
+
+
+
+/* notifications */
+#account-menu .css-eqeipb-MuiPaper-root-MuiPopover-paper-MuiMenu-paper{
+    background-color: var(--color-dark-1) !important;
+}
+#account-menu .css-eqeipb-MuiPaper-root-MuiPopover-paper-MuiMenu-paper svg path{
+    fill:var(--color-default2);
+}
+#account-menu .css-eqeipb-MuiPaper-root-MuiPopover-paper-MuiMenu-paper::before{
+    background-color: var(--color-dark-1);
+}
+#account-menu .css-eqeipb-MuiPaper-root-MuiPopover-paper-MuiMenu-paper hr{
+    border-color: var(--color-default-50);
+}
+#notification-menu ul{
+    background-color: var(--color-dark-1);
+    width: 350px;
+    max-height: 500px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+#notification-menu ul::-webkit-scrollbar {
+    width: 0px;
+}
+#notification-menu ul::-webkit-scrollbar-track {
+    background: var(--color-dark-4);
+}
+#notification-menu ul::-webkit-scrollbar-thumb {
+    background: var(--color-dark-3);
+}
+#notification-menu ul::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* notifications for staff */
+.notifications .page-title{
+    font-size: 1.7em;
+    color: var(--color-default2);
+}
+
+@media (max-width:768px) {
+    #notification-menu .css-7qpwz5-MuiPaper-root-MuiPopover-paper-MuiMenu-paper::before{
+        /* right: 65px; */
+        display: none;
+    }
+    #notification-menu ul{
+        background-color: var(--color-dark-1);
+        width: 330px;
+    }
+}

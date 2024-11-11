@@ -1,0 +1,41 @@
+.pdf-div{
+    width: 100%;
+    position: relative;
+    padding-top: 70px;
+}
+.pdf-div .options{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 555;
+    background-color: var(--accordion-playlist-background);
+    padding: 15px;
+}
+.pdf-div .options a{
+    font-size: 1em;
+    color: #fff;
+}
+.pdf-div:last-child{
+    z-index: 1;
+}
+.pdf-div .rpv-core__inner-page{
+    background-color: var(--accordion-playlist-background) !important;
+}
+.rpv-core__viewer{
+    position: relative !important;
+    background-color: var(--accordion-playlist-background) !important;
+    padding-bottom: 70px;
+}
+#worker{
+    position: relative !important;
+}
+#fullscreen-btn{
+    position: absolute !important;
+    top: 75px;
+    right: 5px;
+    z-index: 555 !important;
+    border: 0;
+    outline: 0;
+    font-size: 1.2em
+}

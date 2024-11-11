@@ -1,0 +1,10 @@
+.isExist{
+    min-height: 50vh;
+    background-color: var(--color-dark-1);
+}
+.isExist .container{
+    min-height: 50vh;
+}
+#warning-1{
+    width: 100%;
+}

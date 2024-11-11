@@ -1,0 +1,28 @@
+#note-box{
+    height: 90%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+#note-box .image{
+    position: relative;
+    width: 55%;
+}
+#note-box img{
+    width: 550px;
+    padding: 20px;
+    border-radius: 100%;
+    margin-bottom: 20px;
+}
+#note-box h3{
+    font-size: 1.5em;
+    padding: 7px 15px;
+    border-radius: 5px;
+    position: absolute;
+    top: 65%;
+    color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

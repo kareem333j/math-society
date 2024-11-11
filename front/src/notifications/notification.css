@@ -1,0 +1,44 @@
+.notification-page.sec1{
+    min-height: 60vh;
+    width: 100%;
+    padding-top: 30px;
+    margin-bottom: 50px;
+}
+.notification-page .title{
+    color: var(--color-default2);
+    font-size: 1.5em;
+}
+.notification-page .main-box{
+    width: 100%;
+    background-color: var(--color-dark-1);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.notification-page .sended-username{
+    color: var(--color-default2);
+    font-size: 1.3em;
+}
+.notification-page .to-user{
+    font-size: 1.1em;
+}
+.notification-page .notification-title p{
+    color: var(--color-default2);
+    font-size: 1.3em;
+    font-family: "Almarai", sans-serif;
+    line-height: 35px;
+    width: 100%;
+    display: flex;
+}
+.notification-page .notification-context p{
+    color: var(--color-default2);
+    font-size: 1.2em;
+    font-family: "Almarai", sans-serif;
+    line-height: 35px;
+    width: 100%;
+    display: flex;
+}
+.notification-page .notification-date{
+    font-size: 1.1em;
+    color: var(--color-default-50);
+}

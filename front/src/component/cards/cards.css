@@ -1,0 +1,187 @@
+.exam-card {
+    position: relative;
+    background: var(--red-gradient);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    height: 200px;
+}
+.exam-card .card-back{
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+/* تأثير الموجه على أحد جوانب الكارت */
+.exam-card .card-back::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0px;
+    width: 250px;
+    /* عرض الحافة الموجهة */
+    height: 100%;
+    background: linear-gradient(135deg, transparent 50%, rgba(214, 203, 203, 0.551) 50%);
+    /* تأثير الموجه */
+    transform: skewX(-30deg);
+    /* تعديل ميلان التأثير */
+    z-index: 1;
+    /* وضع التأثير فوق الكارت */
+}
+
+
+/* محتوى كارت الامتحانات */
+.exam-card-content {
+    color: var(--color-default2);
+    padding: 25px 15px;
+    width: 80%;
+    position: absolute;
+    bottom: -30px;
+    background-color: var(--color-dark-1);
+    z-index: 2;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.exam-card:hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 6px 11px;
+}
+
+.exam-card:hover .exam-card-content {
+    transform: scale(1.05);
+}
+
+.exam-card-content h3{
+    font-size: 1.3em;
+    text-align: end;
+}
+.exam-card-content h5{
+    text-align: end;
+    font-size: 1.1em;
+    color: var(--color-default-50);
+}
+.exam-card-content hr{
+    border: 0;
+    height: 2px;
+    background-color: var(--title-background);
+}
+
+
+/* course card */
+.course {
+    border-radius: 5px;
+    background-color: var(--color-dark-1);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 10px 5px;
+    transition: all 0.3s ease;
+}
+.course.badge-poster{
+    position: relative;
+    overflow: hidden;
+}
+.course.badge-poster::after {
+    position: absolute;
+    padding: 5px 54px;
+    box-shadow: 0 0 5px 3px #715e006e;
+    top: 18px;
+    right: -33px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.1em;
+    font-weight: bold;
+    -webkit-transform: rotateZ(45deg);
+    transform: rotateZ(45deg);
+    letter-spacing: 1.5px;
+}
+.course.badge-poster.free-course::after{
+    content: 'مجانا' !important;
+    color: #fff !important;
+    background: linear-gradient(to right, var(--tw-gradient-from) ,var(--tw-gradient-to)) !important;
+}
+.course.badge-poster.new::after{
+    content: 'جديد';
+    color: #fff;
+    background: linear-gradient(to right, var(--red-max) ,var(--red1));
+}
+.course.badge-poster.paid::after{
+    content: 'مدفوع' !important;   
+    color: #fff !important;
+    background: linear-gradient(to right, var(--text-cyan-700) ,var(--title-background)) !important;
+}
+
+.course:hover{
+    transform: scale(1.05);
+}
+.course .title{
+    font-weight: bold;
+    font-size: 1.3em;
+    color: var(--color-default2);
+}
+.course .description{
+    font-weight: 500;
+    font-size: 1em;
+    color: var(--color-default-50);
+}
+.course .more-info{
+    margin: 0 !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+.course .line{
+    width: 100%;
+}
+.course .date span{
+    font-size: 0.9em;
+    color: var(--color-default-50);
+}
+.course .price {
+    background-color: var(--tw-gradient-from);
+    border-radius: 5px;
+    padding: 3px 8px;
+}
+.course .price span{
+    font-size: 0.9em;
+}
+.course .price .number{
+    background-color: var(--color-dark-2);
+    color: var(--color-default2);
+    padding: 2px 3px;
+    border-radius: 5px;
+    margin-left: 3px;
+}
+.course .price .name{
+    padding: 2px 3px;
+}
+
+@media (max-width: 991px) {
+    .course .date{
+        margin-bottom: 10px;
+    }
+    .course .date div{
+        text-align: center;
+        justify-content: center !important;
+    }
+    
+}
+
+@media (max-width: 768px) {
+    .course .title{
+        font-size: 1.5em !important;
+    }
+    .course .description{
+        font-size: 1.2em !important;
+    }
+    .course .date span{
+        font-size: 1.1em !important;
+    }
+    .course a{
+        font-size: 1.1em !important;
+    }
+}

@@ -1,0 +1,98 @@
+.dash-sidebar a{
+    color: var(--color-default2);
+}
+.dash-sidebar {
+    width: 250px;
+    height: 85vh;
+    position: fixed;
+    top: calc((var(--navbar-height)) + (20px));
+    right: 20px;
+    background-color: var(--dash-sidebar);
+    border-radius: 10px;
+    z-index: 555;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding: 15px 0;
+    color: var(--color-default2);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: ease-out 0.4s all;
+}
+
+.dash-sidebar svg {
+    width: 25px;
+    height: 25px;
+}
+
+.dash-sidebar svg path {
+    fill: var(--color-default2);
+}
+
+.dash-sidebar .arrowHide {
+    position: absolute;
+    top: 49%;
+    left: -50px;
+    background-color: var(--dash-sidebar);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 10px;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: 0.6s ease;
+}
+
+.dash-sidebar .title {
+    width: 85%;
+    font-size: 1.35em;
+    border-bottom: 1px solid var(--color-default-50);
+    padding-bottom: 15px;
+}
+.dash-sidebar .list-items {
+    width: 100%;
+    font-size: 1.2em;
+}
+.dash-sidebar .list-items .item{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    cursor: pointer;
+    border-radius: 10px;
+    position: relative;
+}
+.dash-sidebar .list-items .item .content{
+    width: 85% !important;
+    align-items: center;
+    transition: 0.3s;
+}
+.dash-sidebar .list-items .item .icon{
+    padding: 12px;
+    border-radius: 100%;
+}
+
+.dash-sidebar .list-items .item:hover{
+    background-color: var(--red-light0);
+    color: #fff;
+}
+.dash-sidebar .list-items .item.active{
+    background-color: var(--red-light2);
+    color: #fff;
+}
+.dash-sidebar .list-items .item.active path,
+.dash-sidebar .list-items .item:hover path{
+    fill: #fff;
+}
+
+.dash-sidebar .list-items .item:hover .content,
+.dash-sidebar .list-items .item.active .content
+{
+    padding-right: 10px;
+}
+
+.dash-sidebar .list-items .item .focus{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 666 !important;
+}

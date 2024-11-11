@@ -1,0 +1,130 @@
+.profile-title div {
+    border: 0.5px solid rgba(128, 128, 128, 0.251);
+    font-size: 1.8em;
+    border-radius: 50px;
+    margin-bottom: 20px;
+}
+
+.user-profile .title {
+    padding: 50px 0 20px 0;
+    font-size: 1.6em;
+    color: var(--color-default2);
+}
+
+.user-profile .title svg {
+    width: 25px;
+    height: 25px;
+}
+
+.profile-title div span {
+    padding: 5px 20px;
+    display: inline-block;
+    height: 100%;
+    text-align: center;
+    color: var(--color-default2);
+    border-radius: 50px;
+}
+
+.profile-title div span:first-child {
+    background-color: var(--tw-gradient-from);
+    width: 70px;
+    color: #fff;
+}
+
+.sec {
+    background-color: var(--color-dark-1);
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 15px;
+}
+
+.profile-sec1 .avatar-div {
+    position: absolute;
+    top: -50px;
+    right: -10px;
+    background-color: var(--color-dark-2);
+    border-radius: 100%;
+    width: 150px;
+    height: 150px;
+}
+
+.profile-sec1 .profile-avatar {
+    width: 130px;
+    height: 130px;
+    padding: 15px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    color: var(--color-default2);
+}
+
+.profile-sec1 .head {
+    width: 100%;
+    padding-right: 150px;
+    color: var(--color-default2);
+}
+
+.profile-sec1 .head h4 {
+    font-size: 1.7em;
+}
+
+.profile-sec1 .head p {
+    font-size: 1.1em;
+    letter-spacing: 1px;
+    color: var(--color-default-50);
+}
+
+.profile-sec1 hr {
+    border: 0;
+    margin: 15px auto;
+    padding: 0.5px;
+    border-radius: 10px;
+    background-color: var(--color-default2);
+}
+
+.profile-sec1 .data {
+    width: 100%;
+    color: var(--color-default2);
+}
+
+.profile-sec1 .data .item {
+    font-size: 1.3em;
+    margin-bottom: 5px;
+}
+
+.profile-sec1 .data .item span:first-child {
+    color: var(--tw-gradient-from);
+    font-weight: bold;
+}
+
+/*  */
+.course-progress .MuiBox-root.css-70qvj9 {
+    width: 100%;
+}
+
+.user-profile .course-card {
+    background-color: var(--color-dark-1);
+    overflow: hidden;
+    border-radius: 10px !important;
+    border: 0.1px solid var(--tw-gradient-from);
+    color: var(--color-default2);
+}
+
+.user-profile .no-data svg {
+    width: 30px;
+    height: 30px;
+}
+
+.statistics .ant-progress-text {
+    color: var(--color-default2) !important;
+}
+
+@media (max-width:768px) {
+    .profile-sec1 .head span {
+        padding-left: 0 !important;
+    }
+    .sec{
+        padding-left: 0 !important; 
+        padding-right: 0 !important;
+    }
+}

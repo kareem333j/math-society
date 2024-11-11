@@ -1,0 +1,186 @@
+.area-table {
+    width: 100%;
+    overflow: hidden;
+    overflow-x: scroll;
+}
+
+@media (min-width: 992px) {
+    .area-table::-webkit-scrollbar {
+        width: 2px !important;
+        height: 4px;
+    }
+
+    .area-table::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .area-table::-webkit-scrollbar-thumb {
+        background: #888888af;
+        border-radius: 20px;
+    }
+}
+
+.area-table table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0.8em;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 1.1em;
+}
+
+.area-table table thead .head span {
+    border-bottom: 3px solid var(--red-light);
+    padding-bottom: 5px;
+}
+
+.area-table table tr {
+    margin-bottom: 20px !important;
+    border-radius: 35px !important;
+}
+
+.area-table table th,
+.area-table table td {
+    padding: 5px;
+    color: var(--color-default2);
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.area-table table .td-id {
+    text-align: center;
+}
+
+.area-table table tbody tr:nth-child(odd) {
+    background-color: var(--table-odd);
+}
+
+.area-table table tbody tr:nth-child(even) {
+    background-color: var(--table-even);
+}
+
+.area-table table tbody .active,
+.area-table table tbody .not-active,
+.area-table table tbody .not-paid {
+    padding: 5px 10px;
+    background-color: var(--tw-gradient-from) !important;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.area-table table tbody .not-active {
+    background-color: gray !important;
+}
+.area-table table tbody .not-paid {
+    background-color: var(--red-light) !important;
+}
+
+
+.area-table table .user-main-info {
+    align-items: start;
+    gap: 10px;
+    padding: 5px;
+}
+
+.area-table table .user-main-info .content {
+    /* padding-top: 20px; */
+    justify-content: end;
+}
+
+.area-table table .user-main-info h3 {
+    font-size: 1.1em;
+}
+
+/* search bar */
+/* .user .admin-search .css-aoffql{
+    width: 100% !important;
+} */
+
+.area-table .user-main-info .admin-user {
+    color: var(--red-light);
+    font-weight: bold;
+}
+
+.area-table .user-main-info .staff-user {
+    color: var(--tw-gradient-from);
+    font-weight: bold;
+}
+
+.area-table .user-main-info .student-user {
+    color: var(--title-background);
+    font-weight: bold;
+}
+
+
+
+/* course info */
+.course-info-admin {
+    color: var(--color-default2);
+}
+
+.course-info-admin .title {
+    font-size: 1.6em;
+}
+
+.course-info-admin .title svg {
+    width: 30px;
+    height: 30px;
+}
+
+.course-info-admin .data-title {
+    font-size: 1.4em;
+    color: var(--color-default-50);
+}
+
+
+/* lecture-add-form */
+.dialog-content .title {
+    font-size: 2em;
+    color: var(--color-default2);
+    font-weight: bold;
+    margin-top: 50px;
+}
+
+/* session forms */
+.session-forms{
+    transition: all 0.3s ease;
+}
+.session-forms .questions {
+    /* background-color: var(--questions-bg-form); */
+    border-radius: 5px;
+    width: 99.3%;
+    margin: auto;
+    transition: all 0.3s ease;
+    height: auto;
+    border: 1px solid var(--input-border);
+}
+.session-forms .questions:hover{
+    border: 1px solid var(--green-light);
+}
+.session-forms .questions h3{
+    height: 68px !important;
+    transition: 0.3s all ease-out;
+}
+.session-forms .questions.off{
+    height: 68px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+.session-forms .questions .choice-is-true label{
+    margin: 0 !important;
+}
+
+.session-forms .questions .question .q-title {
+    font-size: 1.2em;
+    color: var(--color-default2);
+}
+.session-forms .questions .question input{
+    color: var(--color-default2) !important;
+}
+
+
+@media (max-width: 768px) {
+    .session-forms .choice-input{
+        padding: 0 !important;
+    }
+}

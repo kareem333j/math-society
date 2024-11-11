@@ -1,0 +1,493 @@
+.navbar {
+  height: calc(var(--navbar-height));
+  background-color: transparent !important;
+  z-index: 888;
+  width: 100%;
+  max-width: 100%;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  transition: all 0.4s ease;
+}
+
+.navbar.scrollable {
+  background-color: var(--color-dark-2) !important;
+  border-bottom: 4px solid rgb(255 0 0/ 0.5);
+}
+
+
+.navbar .container {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar .nav-main .more {
+  width: 30px;
+  height: 20px;
+  border: 0;
+  background-color: transparent;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  transition: all ease 0.4s;
+}
+
+.navbar .nav-main .more div {
+  width: 100%;
+  position: relative;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar .nav-main .more span {
+  width: 100%;
+  border-radius: 20%;
+  height: 4px;
+  position: absolute;
+  left: 0;
+  transition: all 0.3s ease;
+  background-color: var(--red-light);
+}
+
+.navbar .nav-main .more span:first-child {
+  top: 0;
+}
+
+.navbar .nav-main .more span:nth-child(2) {
+  top: 8px;
+}
+
+.navbar .nav-main .more span:last-child {
+  top: 16px;
+}
+
+
+.navbar .nav-main .more.active span:first-child,
+.navbar .nav-main .more.active span:nth-child(2),
+.navbar .nav-main .more.active span:last-child {
+  border-radius: 100%;
+  transition: all ease 0.8s;
+}
+
+.navbar .nav-main .more.active span:first-child {
+  top: 0px;
+  left: 10%;
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg);
+}
+
+.navbar .nav-main .more.active span:last-child {
+  top: 9px;
+  transform: rotate(-45deg);
+}
+
+.navbar .nav-main .more.active span:nth-child(2) {
+  top: 15px;
+  left: 60%;
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg);
+}
+
+.logo span {
+  font-size: var(--logo-font-size);
+}
+
+.nav-links svg {
+  width: 1.2rem;
+}
+
+.nav-links a,
+.main-btn {
+  font-size: var(--button-font-size);
+  width: 150px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  transition: ease 0.3s;
+}
+
+.nav-links .login:hover {
+  box-shadow: var(--default-shadow);
+  transform: scale(1.03);
+  background-color: var(--color-dark-2);
+}
+
+#main-btn-red {
+  background-color: var(--red-light);
+  color: #fff;
+  border: 2px solid var(--red-light);
+}
+
+#main-btn-red:hover {
+  background-color: transparent;
+  color: var(--red-light);
+  border: 2px solid var(--red-light);
+}
+
+#main-btn-red:hover svg path {
+  fill: var(--red-light) !important;
+}
+
+
+
+.toggle--checkbox {
+  display: none;
+}
+
+.toggle--checkbox:checked {
+  /** This will all flip from sun to moon **/
+  /** Change the label color **/
+}
+
+.toggle--checkbox:checked~.background {
+  background: var(--indigo-background);
+}
+
+.toggle--checkbox:checked+.toggle--label {
+  background: var(--indigo-color);
+  border-color: var(--indigo-border);
+  /** Change the cloud to stars **/
+  /** Change the sun into the moon **/
+  /** Show the dimples on the moon **/
+}
+
+.toggle--checkbox:checked+.toggle--label .toggle--label-background {
+  left: 27px;
+  width: 2.5px;
+}
+
+.toggle--checkbox:checked+.toggle--label .toggle--label-background:before {
+  width: 2.5px;
+  height: 2.5px;
+  top: -11px;
+}
+
+.toggle--checkbox:checked+.toggle--label .toggle--label-background:after {
+  width: 2.5px;
+  height: 2.5px;
+  left: -12px;
+  top: 8px;
+}
+
+.toggle--checkbox:checked+.toggle--label:before {
+  background: var(--white);
+  border-color: var(--gray-border);
+  animation-name: switch;
+  animation-duration: 350ms;
+  animation-fill-mode: forwards;
+}
+
+.toggle--checkbox:checked+.toggle--label:after {
+  transition-delay: 350ms;
+  opacity: 1;
+}
+
+.toggle--label {
+  /** Placeholder element, starting at blue **/
+  width: 75px;
+  height: 35px;
+  background: var(--blue-color);
+  border-radius: 50px;
+  border: 2px solid var(--blue-border);
+  display: flex;
+  position: relative;
+  transition: all 350ms ease-in;
+  /** The sun cloud and moon stars **/
+  /** Sun/Moon element **/
+  /** Gray dots on the moon **/
+}
+
+.toggle--label-background {
+  width: 3px;
+  height: 1.5px;
+  border-radius: 2px;
+  position: relative;
+  background: var(--white);
+  left: 50px;
+  top: 13px;
+  transition: all 150ms ease-in;
+}
+
+.toggle--label-background:before {
+  content: "";
+  position: absolute;
+  top: -2.5px;
+  width: 15px;
+  height: 1.7px;
+  border-radius: 2px;
+  background: var(--white);
+  left: -7px;
+  transition: all 150ms ease-in;
+}
+
+.toggle--label-background:after {
+  content: "";
+  position: absolute;
+  top: 2.5px;
+  width: 15px;
+  height: 1.7px;
+  border-radius: 2px;
+  background: var(--white);
+  left: -3px;
+  transition: all 150ms ease-in;
+}
+
+.toggle--label:before {
+  animation-name: reverse;
+  animation-duration: 350ms;
+  animation-fill-mode: forwards;
+  transition: all 350ms ease-in;
+  content: "";
+  width: 27px;
+  height: 27px;
+  border: 1.5px solid var(--yellow-border);
+  top: 2px;
+  left: 3.5px;
+  position: absolute;
+  border-radius: 82px;
+  background: var(--yellow-background);
+}
+
+.toggle--label:after {
+  transition-delay: 0ms;
+  transition: all 250ms ease-in;
+  position: absolute;
+  content: "";
+  box-shadow: var(--gray-dots) -13px 0 0 2px, var(--gray-dots) -24px 14px 0 -2px;
+  left: 55px;
+  top: 8px;
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+@keyframes switch {
+  0% {
+    left: 1.5px;
+  }
+
+  60% {
+    left: 1.5px;
+    width: 40px;
+  }
+
+  100% {
+    left: 42px;
+    width: 27px;
+  }
+}
+
+@keyframes reverse {
+  0% {
+    left: 39px;
+    width: 30px;
+  }
+
+  60% {
+    left: 20px;
+    width: 40px;
+  }
+
+  100% {
+    left: 1.5px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .toggle--checkbox:checked+.toggle--label .toggle--label-background {
+    left: -45px;
+    width: 2.5px;
+  }
+
+  .toggle--checkbox:checked+.toggle--label .toggle--label-background:before {
+    width: 2.5px;
+    height: 2.5px;
+    top: -11px;
+  }
+
+  .toggle--checkbox:checked+.toggle--label .toggle--label-background:after {
+    width: 2.5px;
+    height: 2.5px;
+    left: -12px;
+    top: 8px;
+  }
+
+  /*  */
+  .toggle--label-background {
+    width: 3px;
+    height: 1.5px;
+    border-radius: 2px;
+    position: relative;
+    background: var(--white);
+    left: -20px;
+    top: 15px;
+    transition: all 150ms ease-in;
+  }
+
+  @keyframes switch {
+    0% {
+      left: 1.5px;
+    }
+
+    60% {
+      left: 1.5px;
+      width: 40px;
+    }
+
+    100% {
+      left: 42px;
+      width: 27px;
+    }
+  }
+
+  @keyframes reverse {
+    0% {
+      left: 39px;
+      width: 30px;
+    }
+
+    60% {
+      left: 20px;
+      width: 40px;
+    }
+
+    100% {
+      left: 1.5px;
+    }
+  }
+
+  /* mode button not authenticated */
+  #not_auth .toggle--checkbox:checked+.toggle--label .toggle--label-background {
+    left: 25px;
+    width: 2.5px;
+  }
+  #not_auth  .toggle--label-background {
+    left: 50px;
+  }
+}
+
+
+
+
+
+
+
+.isLoggedInSM {
+  display: none;
+}
+
+.isLoggedInLG {
+  display: flex;
+}
+
+.isLoggedInSM,
+.isLoggedInLG {
+  background-color: transparent;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.navbar .isLoggedInSM,
+.navbar .isLoggedInLG {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.navbar.scrollable .isLoggedInSM,
+.navbar.scrollable .isLoggedInLG {
+  box-shadow: none !important;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    top: -200px;
+    left: 0;
+    width: 100%;
+    background-color: var(--red-light2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    transition: all 0.3s ease;
+    z-index: 888 !important;
+  }
+
+  .isLoggedInSM {
+    display: flex;
+    direction: ltr;
+    width: 30%;
+  }
+
+  .isLoggedInLG {
+    display: none;
+  }
+
+  .nav-links.active {
+    top: var(--navbar-height);
+  }
+
+  .nav-links a {
+    width: 95%;
+    justify-content: start !important;
+    background-color: var(--red-max) !important;
+    padding: 10px 20px;
+  }
+
+  .nav-links a span {
+    color: #fff !important;
+  }
+
+  .nav-links a svg path {
+    fill: #fff;
+  }
+
+  .navbar .container {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .navbar .nav-main .more {
+    display: flex;
+  }
+
+  .navbar .nav-main {
+    direction: ltr;
+    width: 100% !important;
+    justify-content: space-around !important;
+  }
+
+  .navbar .logo img {
+    width: 130px;
+  }
+
+  #switch .nav-main {
+    direction: rtl !important;
+  }
+
+}
+
+/* on scroll */
+
+.tape {
+  position: fixed;
+  top: calc(var(--navbar-height) - 4px);
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--scroll-tape-color);
+  transform-origin: 0%;
+  z-index: 999;
+}

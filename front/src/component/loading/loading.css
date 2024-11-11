@@ -1,0 +1,16 @@
+.loading1{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #cccccc23;
+    z-index: 9999;
+}
+.loading1 .load{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99999;
+}

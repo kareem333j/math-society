@@ -1,0 +1,365 @@
+.gradient-btn1 {
+    border-radius: 100px;
+    padding: 5px 15px;
+    font-size: 0.9em;
+    transition: all 0.2s ease-out;
+}
+
+.fill-btn {
+    color: #fff;
+    background: linear-gradient(to right, var(--tw-gradient-stops));
+    border: 2px solid var(--tw-gradient-from);
+}
+.non-fill-btn {
+    color: var(--color-default2);
+    border: 2px solid var(--tw-gradient-from);
+}
+.non-fill-btn:hover{
+    color: #fff;
+    background: linear-gradient(to right, var(--tw-gradient-stops));
+}
+.CustomBtn1{
+    border: 0;
+    outline: 0;
+    border-radius: 5px;
+    padding: 5px 15px;
+    font-size: 1.2em;
+}
+.CustomBtn1:hover{
+    opacity: 0.8;
+}
+
+.subscribe-btn{
+    padding: 10px;
+    font-size: 1.3em;
+    font-weight: 500;
+    opacity: 0.9;
+}
+.subscribe-btn:hover{
+    opacity: 1;
+}
+.subscribe-btn.is_subscribed{
+    opacity: 0.7;
+    cursor: no-drop;
+    border: 0;
+}
+.subscribe-btn.is_subscribed:hover{
+    opacity: 0.7;
+}
+
+
+
+/* accordion */
+.course-content-accordion .MuiAccordionDetails-root{
+    padding: 0 !important;
+    border: 0 !important;
+}
+.course-content-accordion .MuiButtonBase-root{
+    background-color: var(--accordion-background) !important;
+}
+.course-content-accordion .MuiPaper-root{
+    border: 1px solid var(--accordion-border) !important;
+}
+.course-content-accordion .accordion-title .title{
+    font-size: 1.1em;
+    color: var(--color-default2);
+}
+.course-content-accordion .accordion-title .description{
+    font-size: 0.9em;
+    color: var(--color-default-50);
+}
+.course-content-accordion .MuiSvgIcon-root path{
+    fill: var(--color-default2) !important;
+}
+.course-content-accordion .lec-content div{
+    width: 100%;
+    padding: 10px;
+    background-color: var(--accordion-content-background);
+    border-bottom: 1px solid var(--accordion-border);
+    color: var(--color-default2);
+}
+
+
+
+
+
+
+
+
+/* Love button styles */
+
+
+
+
+#heart-svg {
+    cursor: pointer;
+    overflow: visible;
+    width: 50px;
+
+    #heart {
+        transform-origin: center;
+        animation: animateHeartOut .3s linear forwards;
+    }
+
+    #main-circ {
+        transform-origin: 29.5px 29.5px;
+    }
+}
+
+#checkbox {
+    display: none;
+}
+
+#checkbox:checked+label svg {
+    #heart {
+        transform: scale(.2);
+        fill: #E2264D;
+        animation: animateHeart .3s linear forwards .25s;
+    }
+
+    #main-circ {
+        transition: all 2s;
+        animation: animateCircle .3s linear forwards;
+        opacity: 1;
+    }
+
+    #grp1 {
+        opacity: 1;
+        transition: .1s all .3s;
+
+        #oval1 {
+            transform: scale(0) translate(0, -30px);
+            transform-origin: 0 0 0;
+            transition: .5s transform .3s;
+        }
+
+        #oval2 {
+            transform: scale(0) translate(10px, -50px);
+            transform-origin: 0 0 0;
+            transition: 1.5s transform .3s;
+        }
+    }
+
+    #grp2 {
+        opacity: 1;
+        transition: .1s all .3s;
+
+        #oval1 {
+            transform: scale(0) translate(30px, -15px);
+            transform-origin: 0 0 0;
+            transition: .5s transform .3s;
+        }
+
+        #oval2 {
+            transform: scale(0) translate(60px, -15px);
+            transform-origin: 0 0 0;
+            transition: 1.5s transform .3s;
+        }
+    }
+
+    #grp3 {
+        opacity: 1;
+        transition: .1s all .3s;
+
+        #oval1 {
+            transform: scale(0) translate(30px, 0px);
+            transform-origin: 0 0 0;
+            transition: .5s transform .3s;
+        }
+
+        #oval2 {
+            transform: scale(0) translate(60px, 10px);
+            transform-origin: 0 0 0;
+            transition: 1.5s transform .3s;
+        }
+    }
+
+    #grp4 {
+        opacity: 1;
+        transition: .1s all .3s;
+
+        #oval1 {
+            transform: scale(0) translate(30px, 15px);
+            transform-origin: 0 0 0;
+            transition: .5s transform .3s;
+        }
+
+        #oval2 {
+            transform: scale(0) translate(40px, 50px);
+            transform-origin: 0 0 0;
+            transition: 1.5s transform .3s;
+        }
+    }
+
+    #grp5 {
+        opacity: 1;
+        transition: .1s all .3s;
+
+        #oval1 {
+            transform: scale(0) translate(-10px, 20px);
+            transform-origin: 0 0 0;
+            transition: .5s transform .3s;
+        }
+
+        #oval2 {
+            transform: scale(0) translate(-60px, 30px);
+            transform-origin: 0 0 0;
+            transition: 1.5s transform .3s;
+        }
+    }
+
+    #grp6 {
+        opacity: 1;
+        transition: .1s all .3s;
+
+        #oval1 {
+            transform: scale(0) translate(-30px, 0px);
+            transform-origin: 0 0 0;
+            transition: .5s transform .3s;
+        }
+
+        #oval2 {
+            transform: scale(0) translate(-60px, -5px);
+            transform-origin: 0 0 0;
+            transition: 1.5s transform .3s;
+        }
+    }
+
+    #grp7 {
+        opacity: 1;
+        transition: .1s all .3s;
+
+        #oval1 {
+            transform: scale(0) translate(-30px, -15px);
+            transform-origin: 0 0 0;
+            transition: .5s transform .3s;
+        }
+
+        #oval2 {
+            transform: scale(0) translate(-55px, -30px);
+            transform-origin: 0 0 0;
+            transition: 1.5s transform .3s;
+        }
+    }
+
+    #grp2 {
+        opacity: 1;
+        transition: .1s opacity .3s;
+    }
+
+    #grp3 {
+        opacity: 1;
+        transition: .1s opacity .3s;
+    }
+
+    #grp4 {
+        opacity: 1;
+        transition: .1s opacity .3s;
+    }
+
+    #grp5 {
+        opacity: 1;
+        transition: .1s opacity .3s;
+    }
+
+    #grp6 {
+        opacity: 1;
+        transition: .1s opacity .3s;
+    }
+
+    #grp7 {
+        opacity: 1;
+        transition: .1s opacity .3s;
+    }
+}
+
+@keyframes animateCircle {
+    40% {
+        transform: scale(10);
+        opacity: 1;
+        fill: #DD4688;
+    }
+
+    55% {
+        transform: scale(11);
+        opacity: 1;
+        fill: #D46ABF;
+    }
+
+    65% {
+        transform: scale(12);
+        opacity: 1;
+        fill: #CC8EF5;
+    }
+
+    75% {
+        transform: scale(13);
+        opacity: 1;
+        fill: transparent;
+        stroke: #CC8EF5;
+        stroke-width: .5;
+    }
+
+    85% {
+        transform: scale(17);
+        opacity: 1;
+        fill: transparent;
+        stroke: #CC8EF5;
+        stroke-width: .2;
+    }
+
+    95% {
+        transform: scale(18);
+        opacity: 1;
+        fill: transparent;
+        stroke: #CC8EF5;
+        stroke-width: .1;
+    }
+
+    100% {
+        transform: scale(19);
+        opacity: 1;
+        fill: transparent;
+        stroke: #CC8EF5;
+        stroke-width: 0;
+    }
+}
+
+@keyframes animateHeart {
+    0% {
+        transform: scale(.2);
+    }
+
+    40% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes animateHeartOut {
+    0% {
+        transform: scale(1.4);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+/* dashboard */
+.dashboard-main-btn{
+    width: 100%;
+    padding: 10px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1.3em;
+}
+.dashboard-main-btn:hover{
+    background: var(--hover-admin-btn) !important;
+}

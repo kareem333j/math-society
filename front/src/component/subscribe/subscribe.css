@@ -1,0 +1,177 @@
+.course-data-subscribe{
+    display: flex;
+    height: 200px;
+    position: relative;
+    background-image: url('../../assets/images/background/background-pattern.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+.course-data-subscribe::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--red-gradient);
+    opacity: 0.9;
+}
+
+
+.course-data-subscribe .container{
+    display: flex;
+    z-index: 555;
+    z-index: 555;
+    justify-content: start;
+    align-items: center;
+}
+.course-data-subscribe .container .row{
+    margin-top: 300px;
+}
+
+.course-data-subscribe-card{
+    background-color: var(--color-dark-2);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 2px !important;
+    margin-top: 20px !important;
+    position: relative;
+    z-index: 777 !important;
+}
+.course-data-subscribe-card.is_subscribe{
+    margin-top: 80px !important;
+}
+.course-data-subscribe-card .media img{
+    width: 100%;
+}
+.course-data-subscribe-card .item{
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid var(--color-default-50);
+}
+.course-data-subscribe-card .item:last-child{
+    border-bottom: 0 !important;
+}
+.course-data-subscribe-card .item .course-title{
+    color: var(--color-default2);
+    font-size: 1.3em;
+    margin-bottom: 10px;
+}
+.course-data-subscribe-card .item span{
+    color: var(--color-default2);
+    font-size: 1.1em;
+}
+.course-data-subscribe-card .actions{
+    padding: 10px;
+}
+
+.course-details-subscribe{
+    min-height: 250px;
+    justify-content: center;
+    align-items: start;
+}
+.course-details-subscribe.is_subscribe{
+    padding-top: 110px;
+}
+.course-details-subscribe .title span{
+    font-size: 1.7em;
+    color: var(--color-default2);
+    font-weight: bold;
+}
+.course-details-subscribe .grade span{
+    font-size: 1.6em;
+    color: var(--color-default2);
+}
+.course-details-subscribe .date span{
+    font-size: 1.1em;
+    color: var(--color-default2);
+}
+.course-details-subscribe .note{
+    font-size: 1.2em;
+    color: var(--color-default2);
+}
+.course-content-subscribe{
+    background-color: var(--color-dark-2);
+    padding: 0;
+    padding-top: 100px;
+    padding-bottom: 150px;
+    min-height: 80vh;
+
+}
+.course-content-subscribe .container{
+    margin-top: 20px;
+    padding: 0 !important;
+}
+.course-content-subscribe .container{
+    padding-right: 20px !important;
+    padding-left: 20px !important;
+}
+.course-content-subscribe .content-div{
+    padding-top: 15px;
+}
+.course-content-subscribe .content-div .notes-div{
+    position: relative;
+    z-index: 666 !important;
+}
+.course-content-subscribe .item{
+    padding: 10px 0;
+    color: var(--color-default2);
+}
+.course-content-subscribe .item span{
+    font-size: 1.2em;
+}
+.course-content-subscribe .item svg{
+    width: 30px;
+    height: 30px;
+}
+@media (max-height:800px) {
+    .course-content-subscribe{
+        padding-top: 300px !important;
+    }
+}
+
+@media (max-width:992px) {
+    .course-content-subscribe{
+        padding-top: calc((90vh) - (500px));
+    }
+}
+
+@media (max-width:768px) {
+    .course-data-subscribe-card{
+        margin-top: 330px !important;
+    }
+    .course-data-subscribe-card.is_subscribe{
+        margin-top: 380px !important;
+    }
+    .course-details-subscribe{
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        margin-top: 50px !important;
+    }
+    .course-details-subscribe.is_subscribe{
+        padding-top: 0;
+    }
+    .course-content-subscribe{
+        padding-top: calc((90vh) - (400px));
+    }
+
+    .course-content-subscribe .item svg{
+        width: 25px;
+        height: 25px;
+    }
+    .course-content-subscribe .container{
+        padding-top: 120px !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .course-details-subscribe span{
+        color: #fff !important;
+    }
+}
+@media (width: 768px) {
+    .course-details-subscribe{
+        margin-top: 150px !important;
+    }
+}

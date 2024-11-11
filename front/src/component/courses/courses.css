@@ -1,0 +1,8 @@
+.courses-section{
+    min-height: 100vh;
+    background-color: var(--color-dark-2);
+}
+.course-container{
+    min-height: 100vh;  
+    padding-top: 350px;  
+}
