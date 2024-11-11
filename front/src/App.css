@@ -463,8 +463,25 @@ a {
 }
 
 
-
-
+/* menu style */
+#account-menu .css-eqeipb-MuiPaper-root-MuiPopover-paper-MuiMenu-paper{
+  background-color: var(--color-dark-1) !important;
+}
+#account-menu .css-eqeipb-MuiPaper-root-MuiPopover-paper-MuiMenu-paper svg path{
+  fill:var(--color-default2);
+}
+#account-menu .css-eqeipb-MuiPaper-root-MuiPopover-paper-MuiMenu-paper::before{
+  background-color: var(--color-dark-1);
+}
+#account-menu .css-eqeipb-MuiPaper-root-MuiPopover-paper-MuiMenu-paper hr{
+  border-color: var(--color-default-50);
+}
+#account-menu .css-6hp17o-MuiList-root-MuiMenu-list{
+  background-color: var(--color-dark-1);
+}
+#account-menu .css-6hp17o-MuiList-root-MuiMenu-list svg path{
+  fill: var(--color-default2);
+}
 
 
 
