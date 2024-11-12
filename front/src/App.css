@@ -126,7 +126,7 @@
 
   --notifications-seen: #161e2f;
   --notifications-hover: #1f2937;
-  
+
 
   --accordion-playlist-background: var(--color-dark-2);
   --accordion-content-playlist-background: var(--color-dark-3);
@@ -376,33 +376,7 @@ a {
   /* إلغاء التفاعل مع الرموز */
 }
 
-@media (max-width: 768px) {
-  .main-sec {
-    padding-bottom: 200px;
-  }
 
-  .main-sec .slogn {
-    font-size: 2.3em;
-  }
-
-  .main-sec .data {
-    text-align: center;
-  }
-
-  .main-sec .actions {
-    display: flex;
-    justify-content: center;
-  }
-
-  .main-sec .data .title span {
-    font-size: 1.5em;
-  }
-
-  .main-sec .data .name .back-img {
-    width: 230px;
-    left: -10px;
-  }
-}
 
 
 /* sec4 */
@@ -478,7 +452,8 @@ a {
   width: 100%;
   justify-content: space-between;
 }
-.switch-buttons hr{
+
+.switch-buttons hr {
   border-color: var(--color-default-50);
 }
 
@@ -491,27 +466,71 @@ a {
 }
 
 
-
-
-
-
-
-
-#account-menu .css-eqeipb-MuiPaper-root-MuiPopover-paper-MuiMenu-paper{
+#account-menu .css-eqeipb-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
   background-color: var(--color-dark-1) !important;
 }
-#account-menu .css-eqeipb-MuiPaper-root-MuiPopover-paper-MuiMenu-paper svg path{
-  fill:var(--color-default2);
-}
-#account-menu .css-eqeipb-MuiPaper-root-MuiPopover-paper-MuiMenu-paper::before{
-  background-color: var(--color-dark-1);
-}
-#account-menu .css-eqeipb-MuiPaper-root-MuiPopover-paper-MuiMenu-paper hr{
-  border-color: var(--color-default-50);
-}
-#account-menu .css-6hp17o-MuiList-root-MuiMenu-list{
-  background-color: var(--color-dark-1);
-}
-#account-menu .css-6hp17o-MuiList-root-MuiMenu-list svg path{
+
+#account-menu .css-eqeipb-MuiPaper-root-MuiPopover-paper-MuiMenu-paper svg path {
   fill: var(--color-default2);
+}
+
+#account-menu .css-eqeipb-MuiPaper-root-MuiPopover-paper-MuiMenu-paper::before {
+  background-color: var(--color-dark-1);
+}
+
+#account-menu ul hr {
+  border-color: var(--color-default-50) !important;
+}
+
+#account-menu .css-6hp17o-MuiList-root-MuiMenu-list {
+  background-color: var(--color-dark-1);
+}
+
+#account-menu .css-6hp17o-MuiList-root-MuiMenu-list svg path, #account-menu ul svg path{
+  fill: var(--color-default2) !important;
+}
+#account-menu ul{
+  background-color: var(--color-dark-1) !important;
+}
+
+
+/* media */
+
+@media (max-width: 768px) {
+  .main-sec {
+    padding-bottom: 200px;
+  }
+
+  .main-sec .slogn {
+    font-size: 2.3em;
+  }
+
+  .main-sec .data {
+    text-align: center;
+  }
+
+  .main-sec .actions {
+    display: flex;
+    justify-content: center;
+  }
+
+  .main-sec .data .title span {
+    font-size: 1.5em;
+  }
+
+  .main-sec .data .name .back-img {
+    width: 230px;
+    left: -10px;
+  }
+
+  #notification-menu .css-7qpwz5-MuiPaper-root-MuiPopover-paper-MuiMenu-paper::before, #notification-menu .MuiMenu-paper::before{
+    /* right: 65px; */
+    display: none !important;
+  }
+
+  #notification-menu ul {
+    background-color: var(--color-dark-1);
+    width: 330px;
+  }
+
 }
