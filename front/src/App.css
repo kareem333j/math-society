@@ -376,34 +376,6 @@ a {
   /* إلغاء التفاعل مع الرموز */
 }
 
-@media (max-width: 768px) {
-  .main-sec {
-    padding-bottom: 200px;
-  }
-
-  .main-sec .slogn {
-    font-size: 2.3em;
-  }
-
-  .main-sec .data {
-    text-align: center;
-  }
-
-  .main-sec .actions {
-    display: flex;
-    justify-content: center;
-  }
-
-  .main-sec .data .title span {
-    font-size: 1.5em;
-  }
-
-  .main-sec .data .name .back-img {
-    width: 230px;
-    left: -10px;
-  }
-}
-
 
 /* sec4 */
 .sec4 {
@@ -514,4 +486,45 @@ a {
 }
 #account-menu .css-6hp17o-MuiList-root-MuiMenu-list svg path{
   fill: var(--color-default2);
+}
+
+/* media */
+
+@media (max-width: 768px) {
+  .main-sec {
+    padding-bottom: 200px;
+  }
+
+  .main-sec .slogn {
+    font-size: 2.3em;
+  }
+
+  .main-sec .data {
+    text-align: center;
+  }
+
+  .main-sec .actions {
+    display: flex;
+    justify-content: center;
+  }
+
+  .main-sec .data .title span {
+    font-size: 1.5em;
+  }
+
+  .main-sec .data .name .back-img {
+    width: 230px;
+    left: -10px;
+  }
+
+  #notification-menu .css-7qpwz5-MuiPaper-root-MuiPopover-paper-MuiMenu-paper::before {
+    /* right: 65px; */
+    display: none;
+  }
+
+  #notification-menu ul {
+    background-color: var(--color-dark-1);
+    width: 330px;
+  }
+  
 }
