@@ -1,7 +1,6 @@
 import { FormControl, FormControlLabel, IconButton, Radio, RadioGroup, Tooltip } from '@mui/material';
 import './quiz.css';
 import { useEffect, useState } from 'react';
-import q_img from '../../assets/images/q.png';
 import axiosInstance from '../../Axios';
 import LoadingGradient from '../loading/Loading2';
 import Party1 from '../party/party1';

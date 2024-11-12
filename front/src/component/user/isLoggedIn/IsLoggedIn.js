@@ -52,11 +52,12 @@ function IsLoggedIn(props) {
                 <Menu
                     anchorEl={anchorEl}
                     id="account-menu"
-                    data-theme={(props.data_theme === true) ? 'dark' : 'light'}
+                    data-theme={props.data_theme ? 'dark' : 'light'}
                     open={open}
                     dir="rtl"
                     onClose={handleClose}
                     onClick={handleClose}
+                    className="account-menu"
                     slotProps={{
                         paper: {
                             elevation: 0,
@@ -78,7 +79,7 @@ function IsLoggedIn(props) {
                                     right: 14,
                                     width: 10,
                                     height: 10,
-                                    bgcolor: 'background.paper',
+                                    bgcolor: 'var(--color-dark-1)',
                                     transform: 'translateY(-50%) rotate(45deg)',
                                     zIndex: 0,
                                 },
