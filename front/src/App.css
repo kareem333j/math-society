@@ -401,10 +401,6 @@ a {
 }
 
 
-
-
-
-
 /* view-image-window */
 .view-image-window {
   position: fixed;
@@ -424,9 +420,6 @@ a {
 }
 
 
-
-
-
 /* dialog */
 .dialog-navbar {
   background-color: var(--color-dark-1) !important;
@@ -435,12 +428,6 @@ a {
 #dialog-screen [role="dialog"] {
   background-color: var(--color-dark-2) !important;
 }
-
-
-
-
-
-
 
 
 /* switch */
