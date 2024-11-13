@@ -91,14 +91,25 @@ WSGI_APPLICATION = "core.wsgi.application"
 #     }
 # }
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "postgres",
+#         "USER": "postgres.rrogkldbsszqesfwhsho",
+#         "PASSWORD": "karemmagdy123",
+#         "HOST": "aws-0-eu-central-1.pooler.supabase.com",
+#         "PORT": "6543",
+#     }
+# }
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres.rrogkldbsszqesfwhsho",
-        "PASSWORD": "karemmagdy123",
-        "HOST": "aws-0-eu-central-1.pooler.supabase.com",
-        "PORT": "6543",
+        "NAME": "verceldb",
+        "USER": "default",
+        "PASSWORD": "aNdCngbe0W9S",
+        "HOST": "ep-solitary-truth-13080581.us-east-1.aws.neon.tech",
+        "PORT": "5432",
     }
 }
 
