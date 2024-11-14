@@ -242,7 +242,7 @@ a {
   font-size: 2.5em;
 }
 
-@import url(http://fonts.googleapis.com/earlyaccess/droidarabickufi.css);
+@import url(https://fonts.googleapis.com/earlyaccess/droidarabickufi.css);
 
 .droid-arabic-kufi {
   font-family: 'Droid Arabic Kufi', serif;
