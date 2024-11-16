@@ -4,7 +4,7 @@ import axios from 'axios';
 export const domain = 'https://math-api002.vercel.app'
 export const baseURLMedia = `${domain}/media/`;
 export const baseURLMediaTypeImage = `${domain}`;
-export const baseURL = `${domain}/api/`;
+export const baseURL = `${domain}/api`;
 
 const axiosInstance = axios.create({
 	baseURL: baseURL,
@@ -115,7 +115,7 @@ axiosInstance.interceptors.response.use(
 
 		if (
 			error.response.status === 401 &&
-			originalRequest.url === baseURL + 'token/refresh/'
+			originalRequest.url === baseURL + '/token/refresh/'
 		) {
 			window.location.href = '/login/';
 			return Promise.reject(error);
