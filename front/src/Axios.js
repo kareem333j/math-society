@@ -99,10 +99,12 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use(
 	(response) => {
+		console.log(response);
 		return response;
 	},
 	async function (error) {
 		const originalRequest = error.config;
+		console.log(error);
 
 		if (typeof error.response === 'undefined') {
 			alert(
@@ -117,6 +119,7 @@ axiosInstance.interceptors.response.use(
 			error.response.status === 401 &&
 			originalRequest.url === baseURL + '/token/refresh/'
 		) {
+			console.log(error);
 			window.location.href = '/login/';
 			return Promise.reject(error);
 		}
@@ -146,10 +149,13 @@ axiosInstance.interceptors.response.use(
 							localStorage.setItem('access_token', response.data.access);
 							localStorage.setItem('refresh_token', response.data.refresh);
 
-							axiosInstance.defaults.headers['Authorization'] =
-								'JWT ' + response.data.access;
-							originalRequest.headers['Authorization'] =
-								'JWT ' + response.data.access;
+							// axiosInstance.defaults.headers['Authorization'] =
+							// 	'JWT ' + response.data.access;
+							// originalRequest.headers['Authorization'] =
+							// 	'JWT ' + response.data.access;
+
+							axiosInstance.defaults.headers.common['Authorization'] = 'JWT ' + response.data.access;
+							originalRequest.headers['Authorization'] ='JWT ' + response.data.access;
 
 							return axiosInstance(originalRequest);
 						})
