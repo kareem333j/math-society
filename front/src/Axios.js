@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 export const domain = 'https://math-api002.vercel.app'
 export const baseURLMedia = `${domain}/media/`;
 export const baseURLMediaTypeImage = `${domain}`;
@@ -18,163 +17,79 @@ const axiosInstance = axios.create({
 	}, 
 });
 
-// axiosInstance.interceptors.response.use(
-// 	(response) => {
-// 		return response;
-// 	},
-// 	async function (error) {
-// 		// console.log(error, "  --  ", error.config); //
-// 		// console.log(error, "  --  ", error.response); //
-// 		const originalRequest = error.config;
+let isRefreshing = false; 
+let failedQueue = []; 
 
-// 		if (typeof error.response === 'undefined') {
-// 			// alert(
-// 			// 	'A server/network error occurred. ' +
-// 			// 		'Looks like CORS might be the problem. ' +
-// 			// 		'Sorry about this - we will get it fixed shortly.'
-// 			// );
-// 			return Promise.reject(error);
-// 		}
-
-// 		if (
-// 			error.response.status === 401 &&
-// 			originalRequest.url === baseURL + 'token/refresh/'
-// 		) {
-// 			window.location.href = '/login/';
-// 			return Promise.reject(error);
-// 		}
-
-// 		if (
-// 			error.response.data.code === 'token_not_valid' &&
-// 			error.response.status === 401 &&
-// 			error.response.statusText === 'Unauthorized'
-// 		) {
-// 			const refreshToken = localStorage.getItem('refresh_token');
-
-// 			if (refreshToken) {
-// 				console.log('logged in');
-// 				const tokenParts = JSON.parse(atob(refreshToken.split('.')[1]));
-
-// 				// exp date in token is expressed in seconds, while now() returns milliseconds:
-// 				const now = Math.ceil(Date.now() / 1000);
-// 				console.log(tokenParts.exp);
-
-// 				if (tokenParts.exp > now) {
-// 					return axiosInstance
-// 						.post('/token/refresh/', { refresh: refreshToken })
-// 						.then((response) => {
-// 							localStorage.setItem('access_token', response.data.access);
-// 							localStorage.setItem('refresh_token', response.data.refresh);
-
-// 							axiosInstance.defaults.headers['Authorization'] =
-// 								'JWT ' + response.data.access;
-// 							originalRequest.headers['Authorization'] =
-// 								'JWT ' + response.data.access;
-
-// 							return axiosInstance(originalRequest);
-// 						})
-// 						.catch((err) => {
-// 							// console.log(err);
-// 							console.log('Refresh token is expired', tokenParts.exp, now);
-// 							window.location.href = '/login/';
-// 						});
-// 				} else {
-// 					console.log('Refresh token is expired', tokenParts.exp, now);
-// 					localStorage.removeItem('access_token');
-// 					localStorage.removeItem('refresh_token');
-// 					window.location.href = '/login/';
-// 				}
-// 			} else {
-// 				console.log('Refresh token not available.');
-// 				localStorage.removeItem('access_token');
-// 				localStorage.removeItem('refresh_token');
-// 				window.location.href = '/login/';
-// 			}
-// 		}
-
-// 		// specific error handling done elsewhere
-// 		return Promise.reject(error);
-// 	}
-// );
+function processQueue(error, token = null) {
+    failedQueue.forEach((prom) => {
+        if (error) {
+            prom.reject(error);
+        } else {
+            prom.resolve(token);
+        }
+    });
+    failedQueue = [];
+}
 
 axiosInstance.interceptors.response.use(
-	(response) => {
-		console.log(response);
-		return response;
-	},
-	async function (error) {
-		const originalRequest = error.config;
-		console.log(error);
+    (response) => response,
+    async (error) => {
+        const originalRequest = error.config;
 
-		if (typeof error.response === 'undefined') {
-			alert(
-				'A server/network error occurred. ' +
-					'Looks like CORS might be the problem. ' +
-					'Sorry about this - we will get it fixed shortly.'
-			);
-			return Promise.reject(error);
-		}
+        if (error.response.status === 401 && !originalRequest._retry) {
+            if (originalRequest.url === baseURL + 'token/refresh/') {
+                window.location.href = '/login/';
+                return Promise.reject(error);
+            }
 
-		if (
-			error.response.status === 401 &&
-			originalRequest.url === baseURL + '/token/refresh/'
-		) {
-			console.log(error);
-			window.location.href = '/login/';
-			return Promise.reject(error);
-		}
+            if (isRefreshing) {
+                return new Promise((resolve, reject) => {
+                    failedQueue.push({ resolve, reject });
+                })
+                    .then((token) => {
+                        originalRequest.headers['Authorization'] = 'JWT ' + token;
+                        return axiosInstance(originalRequest);
+                    })
+                    .catch((err) => {
+                        return Promise.reject(err);
+                    });
+            }
 
-		if (
-			error.response.data.code === 'token_not_valid' &&
-			error.response.status === 401 &&
-			error.response.statusText === 'Unauthorized'
-		) {
-			const refreshToken = localStorage.getItem('refresh_token');
-			console.log(refreshToken);
+            originalRequest._retry = true;
+            isRefreshing = true;
 
-			if (refreshToken) {
-				const tokenParts = JSON.parse(atob(refreshToken.split('.')[1]));
+            const refreshToken = localStorage.getItem('refresh_token');
+            if (refreshToken) {
+                const tokenParts = JSON.parse(atob(refreshToken.split('.')[1]));
+                const now = Math.ceil(Date.now() / 1000);
 
-				// exp date in token is expressed in seconds, while now() returns milliseconds:
-				const now = Math.ceil(Date.now() / 1000);
-				console.log(tokenParts.exp);
+                if (tokenParts.exp > now) {
+                    return axiosInstance
+                        .post('/token/refresh/', { refresh: refreshToken })
+                        .then((response) => {
+                            localStorage.setItem('access_token', response.data.access);
+                            localStorage.setItem('refresh_token', response.data.refresh);
+                            axiosInstance.defaults.headers['Authorization'] =
+                                'JWT ' + response.data.access;
+                            originalRequest.headers['Authorization'] =
+                                'JWT ' + response.data.access;
 
-				if (tokenParts.exp > now) {
-					return axiosInstance
-						.post('/token/refresh/', {
-							refresh: refreshToken,
-						})
-						.then((response) => {
-							console.log('success refresh');
-							localStorage.setItem('access_token', response.data.access);
-							localStorage.setItem('refresh_token', response.data.refresh);
+                            processQueue(null, response.data.access);
+                            return axiosInstance(originalRequest);
+                        })
+                        .catch((err) => {
+                            processQueue(err, null);
+                            window.location.href = '/login/';
+                            return Promise.reject(err);
+                        })
+                        .finally(() => {
+                            isRefreshing = false;
+                        });
+                }
+            }
+        }
 
-							// axiosInstance.defaults.headers['Authorization'] =
-							// 	'JWT ' + response.data.access;
-							// originalRequest.headers['Authorization'] =
-							// 	'JWT ' + response.data.access;
-
-							axiosInstance.defaults.headers.common['Authorization'] = 'JWT ' + response.data.access;
-							originalRequest.headers['Authorization'] ='JWT ' + response.data.access;
-
-							return axiosInstance(originalRequest);
-						})
-						.catch((err) => {
-							console.log(err);
-						});
-				} else {
-					console.log('Refresh token is expired', tokenParts.exp, now);
-					window.location.href = '/login/';
-				}
-			} else {
-				console.log('Refresh token not available.');
-				window.location.href = '/login/';
-			}
-		}
-
-		// specific error handling done elsewhere
-		return Promise.reject(error);
-	}
+        return Promise.reject(error);
+    }
 );
-
 export default axiosInstance;

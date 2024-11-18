@@ -30,7 +30,6 @@ export const ProfileRoutes = (props) => {
     const dataProfile = AuthDataContext.dataProfile;
     const params = useParams();
     const profileId = params.user_id;
-    console.log(dataProfile);
 
     if (dataProfile.isAuthenticated != null) {
         return (dataProfile.isAuthenticated === true) ?
