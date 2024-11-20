@@ -11,6 +11,7 @@ import { AlertSuccess } from "../errors/AlertSuccess";
 import FieldError from "../errors/Field_error";
 import { ExistBefore } from "../errors/auth/ExistBefore";
 import { useLocation } from 'react-router-dom';
+import { Helmet } from "react-helmet";
 
 function Login(props) {
   const dataAuth = props.dataAuth;
@@ -48,9 +49,9 @@ function Login(props) {
         localStorage.setItem('access_token', res.data.access);
         localStorage.setItem('refresh_token', res.data.refresh);
         axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access_token');
-        if(location.state != null){
+        if (location.state != null) {
           window.location.href = `${window.location.origin}${location.state.next}`;
-        }else{
+        } else {
           window.location.href = '/';
         }
       })
@@ -102,7 +103,9 @@ function Login(props) {
     return (
       <>
         <LinearIndeterminate load={loading} />
-
+        <Helmet>
+          <title>تسجيل الدخول - مجتمع الرياضيات</title>
+        </Helmet>
         <div className="auth">
           <div className="image-container">
             <img src={mathLogin} alt="auth login" className="auth-img" />

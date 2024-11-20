@@ -11,6 +11,7 @@ import { MdCreate, MdCreateNewFolder } from 'react-icons/md';
 import { Title2 } from '../../title/Title2';
 import Accordions from '../../inherit/Accordion';
 import { $404 as Error404 } from '../../errors/404';
+import { Helmet } from 'react-helmet';
 
 
 
@@ -67,6 +68,7 @@ function CourseContent(props) {
         // date.toDateString();
     }
 
+
     const price = (courseContent.course.price_off <= 0) ?
         <span className='after'>مجانا</span>
         :
@@ -122,6 +124,9 @@ function CourseContent(props) {
         } else {
             return (
                 <>
+                    <Helmet>
+                        <title>{courseContent.course.title} - مجتمع الرياضيات</title>
+                    </Helmet>
                     <section className='course-data d-flex justify-content-center'>
                         <Container className='d-flex justify-content-center'>
                             <div className='row w-100 d-flex justify-content-start align-items-start'>

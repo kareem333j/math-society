@@ -91,7 +91,6 @@ export default function Users() {
                 handleClickVariant('success', 'تم حذف المستخدم بنجاح');
             }).catch((err) => {
                 setLoading(false);
-                console.log(err);
                 handleClickVariant('error', 'لقد حدث خطأ ');
             })
     }

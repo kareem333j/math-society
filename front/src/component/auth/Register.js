@@ -13,6 +13,7 @@ import FieldError from "../errors/Field_error";
 import { AlertSuccess } from "../errors/AlertSuccess";
 import LinearIndeterminate from "../loading/loading1";
 import { ExistBefore } from "../errors/auth/ExistBefore";
+import { Helmet } from "react-helmet";
 
 
 const errorMsgs = {
@@ -323,6 +324,9 @@ function Register({ dataAuth }) {
     return (
       <>
         <LinearIndeterminate load={loading} />
+        <Helmet>
+          <title>انشاء حساب جديد - مجتمع الرياضيات</title>
+        </Helmet>
         <div className="auth register">
           <div className="image-container">
             <img src={mathLogin} alt="auth login" className="auth-img" />

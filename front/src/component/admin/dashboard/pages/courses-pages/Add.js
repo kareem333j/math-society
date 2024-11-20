@@ -139,7 +139,6 @@ export default function Add() {
                 handleClickVariant('error', 'تأكد ان جميع الحقول ممتلئة');
             }
         }
-        console.log(course.dataCourse)
     }
     if (loading === true) {
         return <LoadingGradient />

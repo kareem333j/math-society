@@ -20,6 +20,7 @@ import Card1 from './component/cards/Card1';
 import axiosInstance from './Axios';
 import LoadingGradient from './component/loading/Loading2';
 import ReloadBtn1 from './component/inherit/ReloadBtn1';
+import { Helmet } from 'react-helmet';
 
 
 
@@ -58,6 +59,9 @@ function Home({ dataAuth }) {
 
   return (
     <>
+      <Helmet>
+        <title>الرئيسية - مجتمع الرياضيات</title>
+      </Helmet>
       <div className='main-background'>
       </div>
       <section className='main-sec d-flex justify-content-center align-items-center'>

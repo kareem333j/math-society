@@ -15,6 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { enqueueSnackbar } from "notistack";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 
 const HtmlContent = ({ htmlString }) => {
@@ -123,6 +124,9 @@ export const NotificationPage = () => {
         if (notification != null) {
             return (
                 <>
+                    <Helmet>
+                        <title>الإشعارات - مجتمع الرياضيات</title>
+                    </Helmet>
                     <section className="notification-page sec1" dir="rtl">
                         <Container className="d-flex flex-column">
                             <div className="w-100 title d-flex justify-content-start align-items-center mb-3 gap-2">
@@ -193,7 +197,7 @@ export const NotificationPage = () => {
                     </section>
                 </>
             )
-        }else{
+        } else {
             <></>
         }
     }

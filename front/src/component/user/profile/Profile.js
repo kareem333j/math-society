@@ -25,6 +25,7 @@ import { CustomSwitchBtn } from '../../admin/dashboard/inherit/SwitchBtn';
 import { DashboardMainBtn } from '../../inherit/DashboardMainBtn';
 import { enqueueSnackbar } from 'notistack';
 import Grid3x3Icon from '@mui/icons-material/Grid3x3';
+import { Helmet } from 'react-helmet';
 
 const theme = createTheme({
     palette: {
@@ -198,6 +199,9 @@ export default function UserProfile(props) {
     } else {
         return (
             <Container className='user-profile pb-5' style={{ 'minHeight': '70vh' }}>
+                <Helmet>
+                    <title>الملف الشخصي - مجتمع الرياضيات</title>
+                </Helmet>
                 <div dir='rtl' className='profile-title w-100 d-flex justify-content-center align-items-center mt-5'>
                     <div className='d-flex p-0 d-flex justify-content-between align-items-center gap-2'>
                         <span><PersonIcon /></span>

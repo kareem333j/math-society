@@ -41,7 +41,6 @@ export default function Payments(props) {
             .catch((err) => {
                 setUserSearched(false);
                 setLoading(false);
-                console.log(err);
             })
     }
 
@@ -202,7 +201,6 @@ export default function Payments(props) {
             .catch((error) => {
                 setUserSearched(true);
                 setLoading(false);
-                console.log(error);
             });
     }
 

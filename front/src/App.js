@@ -68,8 +68,10 @@ function App() {
             },
             btn: 'ok',
             icon: 'error',
+            position: 'center-center',
+            reload:true,
             title: 'خطأ',
-            text: 'لقد حدث خطأ حاول في وقت لاحق واذا لم تحل المشكلة قم بالتواصل مع الدعم'
+            text: 'لقد حدث خطأ ما تأكد من اتصالك بالإنترنت ثم قم بإعادة تحميل الصفحة مرة اخري'
           });
           setNetworkError(true);
         })
@@ -95,7 +97,7 @@ function App() {
     <SnackbarProvider maxSnack={3}>
       <div className="app" id='app' data-theme={isDark ? "dark" : "light"}>
         <Header isChecked={isDark} handelMode={() => setIsDark(!isDark)} dataAuth={dataProfile} data_theme={isDark} />
-        {(networkError === true) ? <Warning title='تحذير هام' message="هناك خطأ ما قد حدث قد لايعمل الموقع بشكل سليم تواصل مع الدعم" /> : <></>}
+        {(networkError === true) ? <Warning title='تحذير هام' message="هناك خطأ ما قد حدث قد لا يعمل الموقع بشكل سليم تأكد من اتصالك بالإنترنت ثم قم بإعادة تحميل الموقع واذا لم تحل المشكلة تواصل مع الدعم" /> : <></>}
 
         <Routes>
           {/* Home route */}

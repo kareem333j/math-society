@@ -8,6 +8,7 @@ import axiosInstance from "../../Axios";
 import { useEffect, useState } from "react";
 import ReloadBtn1 from "../inherit/ReloadBtn1";
 import { $404 as Error404 } from "../errors/404";
+import { Helmet } from "react-helmet";
 
 
 function Courses(props) {
@@ -92,6 +93,14 @@ function Courses(props) {
 
     return (
         <section className="courses-section position-relative pb-5">
+            <Helmet>
+                <title>{
+                    (dataGrade != null) ?
+                        dataGrade.name
+                        :
+                        grade
+                } - مجتمع الرياضيات</title>
+            </Helmet>
             <Title
                 colors={['var(--wave-default4)', 'var(--wave-default3)', 'var(--wave-default2)', 'var(--wave-default1)']}
                 bgColor='var(--red-gradient)'

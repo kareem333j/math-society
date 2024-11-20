@@ -78,7 +78,6 @@ export const Sidebar = () => {
     }, [listItems]);
 
     const handleItemClick = (e) => {
-        console.log(e.target);
         e.target.classList.toggle('active');
     }
     return (
