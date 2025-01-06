@@ -9,9 +9,9 @@ const axiosInstance = axios.create({
 	baseURL: baseURL,
 	timeout: 10000,
 	headers: {
-		Authorization: localStorage.getItem('access_token')
-			? 'JWT ' + localStorage.getItem('access_token')
-			: undefined,
+		// Authorization: localStorage.getItem('access_token')
+		// 	? 'JWT ' + localStorage.getItem('access_token')
+		// 	: undefined,
 		'Content-Type': 'application/json',
 		accept: 'application/json',
 	}, 
@@ -31,6 +31,31 @@ function processQueue(error, token = null) {
     failedQueue = [];
 }
 
+// public api points
+axiosInstance.interceptors.request.use((config) => {
+
+    const publicEndpoints = [
+        '/grades',
+        '/courses',
+    ];
+
+    const isPublic = publicEndpoints.some((endpoint) =>
+        config.url.startsWith(endpoint)
+    );
+
+    if (!isPublic) {
+        const token = localStorage.getItem('access_token');
+        if (token) {
+            config.headers['Authorization'] = 'JWT ' + token;
+        }
+    }
+
+    return config;
+}, (error) => {
+    return Promise.reject(error);
+});
+
+// api for registered users
 axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
