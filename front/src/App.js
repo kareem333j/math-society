@@ -65,6 +65,9 @@ function App() {
           setLoadDataUser(false);
           alert({
             action: () => {
+              localStorage.removeItem('access_token');
+              localStorage.removeItem('refresh_token');
+              window.location.reload();
             },
             btn: 'ok',
             icon: 'error',
