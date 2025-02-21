@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const domain = 'http://127.0.0.1:8000';
+export const domain = 'https://math-api002.vercel.app'
 export const baseURLMedia = `${domain}/media/`;
 export const baseURLMediaTypeImage = `${domain}`;
 export const baseURL = `${domain}/api`;
