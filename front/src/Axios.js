@@ -1,20 +1,17 @@
 import axios from 'axios';
 
-export const domain = 'https://math-api002.vercel.app'
+export const domain = 'http://127.0.0.1:8000'; 
 export const baseURLMedia = `${domain}/media/`;
 export const baseURLMediaTypeImage = `${domain}`;
 export const baseURL = `${domain}/api`;
 
 const axiosInstance = axios.create({
-	baseURL: baseURL,
-	timeout: 10000,
-	headers: {
-		// Authorization: localStorage.getItem('access_token')
-		// 	? 'JWT ' + localStorage.getItem('access_token')
-		// 	: undefined,
-		'Content-Type': 'application/json',
-		accept: 'application/json',
-	}, 
+    baseURL: baseURL,
+    timeout: 10000, 
+    headers: {
+        'Content-Type': 'application/json', 
+        accept: 'application/json', 
+    },
 });
 
 let isRefreshing = false; 
@@ -23,41 +20,38 @@ let failedQueue = [];
 function processQueue(error, token = null) {
     failedQueue.forEach((prom) => {
         if (error) {
-            prom.reject(error);
+            prom.reject(error); 
         } else {
-            prom.resolve(token);
+            prom.resolve(token); 
         }
     });
-    failedQueue = [];
+    failedQueue = []; 
 }
 
-// public api points
-axiosInstance.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use(
+    (config) => {
+        const publicEndpoints = ['/grades', '/courses'];
 
-    const publicEndpoints = [
-        '/grades',
-        '/courses',
-    ];
+        const isPublic = publicEndpoints.some((endpoint) =>
+            config.url.startsWith(endpoint)
+        );
 
-    const isPublic = publicEndpoints.some((endpoint) =>
-        config.url.startsWith(endpoint)
-    );
-
-    if (!isPublic) {
-        const token = localStorage.getItem('access_token');
-        if (token) {
-            config.headers['Authorization'] = 'JWT ' + token;
+        if (!isPublic) {
+            const token = localStorage.getItem('access_token');
+            if (token) {
+                config.headers['Authorization'] = 'JWT ' + token;
+            }
         }
+
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error); 
     }
+);
 
-    return config;
-}, (error) => {
-    return Promise.reject(error);
-});
-
-// api for registered users
 axiosInstance.interceptors.response.use(
-    (response) => response,
+    (response) => response, 
     async (error) => {
         const originalRequest = error.config;
 
@@ -94,6 +88,7 @@ axiosInstance.interceptors.response.use(
                         .then((response) => {
                             localStorage.setItem('access_token', response.data.access);
                             localStorage.setItem('refresh_token', response.data.refresh);
+
                             axiosInstance.defaults.headers['Authorization'] =
                                 'JWT ' + response.data.access;
                             originalRequest.headers['Authorization'] =
@@ -108,9 +103,15 @@ axiosInstance.interceptors.response.use(
                             return Promise.reject(err);
                         })
                         .finally(() => {
-                            isRefreshing = false;
+                            isRefreshing = false; 
                         });
+                } else {
+                    window.location.href = '/login/';
+                    return Promise.reject(error);
                 }
+            } else {
+                window.location.href = '/login/';
+                return Promise.reject(error);
             }
         }
 
