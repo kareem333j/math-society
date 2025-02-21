@@ -40,47 +40,74 @@ function App() {
     profile: null,
   });
 
-  let [user, setUser] = useState(() => localStorage.getItem('access_token') ? jwtDecode(localStorage.getItem('access_token')) : null)
+  let [user, setUser] = useState(() => localStorage.getItem('access_token') ? jwtDecode(localStorage.getItem('access_token')) : null);
   const [networkError, setNetworkError] = useState(false);
   const location = useLocation();
   const [loadDataUser, setLoadDataUser] = useState(false);
   const AuthDataContext = useContext(AuthContext);
 
   useEffect(() => {
-    if (localStorage.getItem('access_token')) {
-      setUser(jwtDecode(localStorage.getItem('access_token')))
-    } else {
-      setUser(null);
-    }
-    setLoadDataUser(true);
-    if (user != null) {
-      axiosInstance
-        .get(`profile/${user.user_id}`)
-        .then((response) => {
-          setLoadDataUser(false);
-          setDataProfile({ isAuthenticated: true, profile: response.data });
-          AuthDataContext.setDataProfile({ isAuthenticated: true, profile: response.data });
-        })
-        .catch((error) => {
-          setLoadDataUser(false);
-          alert({
-            action: () => {
-              localStorage.removeItem('access_token');
-              localStorage.removeItem('refresh_token');
-              window.location.reload();
-            },
-            btn: 'ok',
-            icon: 'error',
-            position: 'center-center',
-            reload:true,
-            title: 'خطأ',
-            text: 'لقد حدث خطأ ما تأكد من اتصالك بالإنترنت ثم قم بإعادة تحميل الصفحة مرة اخري'
-          });
-          setNetworkError(true);
-        })
-    } else {
-      AuthDataContext.setDataProfile(dataProfile);
-    }
+    const fetchUserProfile = async () => {
+      const accessToken = localStorage.getItem('access_token');
+
+      // إذا لم يكن هناك access_token، قم بتعيين المستخدم إلى null
+      if (!accessToken) {
+        setUser(null);
+        setLoadDataUser(false);
+        return;
+      }
+
+      // فك تشفير الـ access_token للتحقق من صلاحيته
+      const decodedToken = jwtDecode(accessToken);
+      const now = Math.ceil(Date.now() / 1000);
+
+      // إذا كان الـ access_token منتهي الصلاحية، قم بحذف التوكينز وتوجيه المستخدم إلى صفحة تسجيل الدخول
+      if (decodedToken.exp < now) {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        window.location.href = '/login';
+        return;
+      }
+
+      // إذا كان الـ access_token صالحًا، قم بتعيين المستخدم وجلب بياناته
+      setUser(decodedToken);
+      setLoadDataUser(true);
+
+      try {
+        const response = await axiosInstance.get(`profile/${decodedToken.user_id}`);
+        setLoadDataUser(false);
+        setDataProfile({ isAuthenticated: true, profile: response.data });
+        AuthDataContext.setDataProfile({ isAuthenticated: true, profile: response.data });
+      } catch (error) {
+        setLoadDataUser(false);
+
+        // إذا كان الخطأ 401 Unauthorized، قم بحذف التوكينز وتوجيه المستخدم إلى صفحة تسجيل الدخول
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('refresh_token');
+          window.location.href = '/login';
+          return;
+        }
+
+        // إذا كان الخطأ غير 401، قم بإظهار رسالة خطأ
+        alert({
+          action: () => {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            window.location.reload();
+          },
+          btn: 'ok',
+          icon: 'error',
+          position: 'center-center',
+          reload: true,
+          title: 'خطأ',
+          text: 'لقد حدث خطأ ما تأكد من اتصالك بالإنترنت ثم قم بإعادة تحميل الصفحة مرة اخري'
+        });
+        setNetworkError(true);
+      }
+    };
+
+    fetchUserProfile();
   }, []);
 
   useEffect(() => {
@@ -90,17 +117,20 @@ function App() {
     } else {
       my_app.classList.remove('home');
     }
-  }, [location])
+
+    // scroll to top after loading
+    window.scrollTo(0, 0);
+  }, [location]);
 
   const alert = (dataAlert) => {
     AlertSuccess(dataAlert);
-  }
+  };
 
   return (
     <SnackbarProvider maxSnack={3}>
       <div className="app" id='app' data-theme={isDark ? "dark" : "light"}>
         <Header isChecked={isDark} handelMode={() => setIsDark(!isDark)} dataAuth={dataProfile} data_theme={isDark} />
-        {(networkError === true) ? <Warning title='تحذير هام' message="هناك خطأ ما قد حدث قد لا يعمل الموقع بشكل سليم تأكد من اتصالك بالإنترنت ثم قم بإعادة تحميل الموقع واذا لم تحل المشكلة تواصل مع الدعم" /> : <></>}
+        {(networkError === true) ? <Warning title='تحذير هام' message="هناك خطأ ما قد حدث قد لا يعمل الموقع بشكل سليم تأكد من اتصالك بالإنترنت ثم قم بإعادة تحميل الموقع" /> : <></>}
 
         <Routes>
           {/* Home route */}
@@ -112,7 +142,7 @@ function App() {
             <Route path="/courses/:grade" element={<><Outlet /></>} />
             <Route path="course/:course_id" element={<CourseContent dataAuth={dataProfile} data_theme={isDark ? "dark" : "light"} />} />
             <Route path="course/:course_id/view" element={<ViewCourse dataAuth={dataProfile} />} />
-            <Route path="course/:course_id/subscribe" element={<SubscribePage dataAuth={dataProfile} userLoaded={loadDataUser} />} />
+            <Route path="course/:course_id/subscribe" element={<SubscribePage data_theme={isDark ? "dark" : "light"} dataAuth={dataProfile} userLoaded={loadDataUser} />} />
           </Route>
 
           {/* auth routes */}
@@ -121,9 +151,6 @@ function App() {
           <Route path="/logout" element={<Logout dataAuth={dataProfile} />} />
 
           {/* admin routes */}
-          {
-
-          }
           <Route element={<AdminRoutes />}>
             <Route path="/admin/dashboard" element={<Main dataAuth={dataProfile} data_theme={isDark} />} >
               <Route index element={<CoursesAdmin dataAuth={dataProfile} />} />
@@ -141,7 +168,6 @@ function App() {
             </Route>
           </Route>
 
-
           {/* user */}
           <Route element={<ProfileRoutes />}>
             <Route path="/user/:user_id/profile" element={<UserProfile dataAuth={dataProfile} />} />
@@ -149,7 +175,6 @@ function App() {
 
           {/* notifications */}
           <Route path="/notifications/:notification_id" element={<NotificationPage dataAuth={dataProfile} />} />
-
         </Routes>
         <Footer />
       </div>
