@@ -1,5 +1,6 @@
 import { Button, FormControl, FormControlLabel, RadioGroup, Slider } from "@mui/material";
 import { useEffect, useState } from "react";
+import axiosInstance from "../../Axios";
 import LoadingGradient from "../loading/Loading2";
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
