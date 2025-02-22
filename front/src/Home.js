@@ -16,13 +16,16 @@ import { FaPlus, FaMinus, FaDivide, FaTimes, FaEquals, FaSquare, FaCircle } from
 import { FaArrowUp } from 'react-icons/fa';
 import Title from './component/title/Title';
 import { NoteBox } from './component/inherit/Note-Box';
+import { NoteBox2 } from './component/inherit/Note-Box2';
 import Card1 from './component/cards/Card1';
 import axiosInstance from './Axios';
 import LoadingGradient from './component/loading/Loading2';
 import ReloadBtn1 from './component/inherit/ReloadBtn1';
 import { Helmet } from 'react-helmet';
 
-
+// motion
+import { motion } from 'framer-motion';
+import { fadeIn } from './variants';
 
 function Home({ dataAuth }) {
   const [scrollY, setScrollY] = useState(0);
@@ -65,7 +68,11 @@ function Home({ dataAuth }) {
       <div className='main-background'>
       </div>
       <section className='main-sec d-flex justify-content-center align-items-center'>
-        <div className='container content row d-flex align-items-center' dir='rtl'>
+        <motion.div variants={fadeIn("up", 0.2)}
+        initial="hidden"
+        whileInView={"show"}
+        viewport={{once: false, amount: 0.7}}
+         className='container content row d-flex align-items-center' dir='rtl'>
           <div className='data col-lg-12 col-md-12 col-12 d-flex justify-content-center align-items-center flex-column'>
             <h3 className='name fw-bold mb-4 text-center'>
               <span style={{ 'color': 'var(--red-light)' }}>م /</span>
@@ -85,13 +92,17 @@ function Home({ dataAuth }) {
               <br />
               علم الرياضيات
             </h5>
-            <div className='actions mt-4'>
+            <div className='actions mt-4 d-flex gap-3'>
               {(dataAuth.isAuthenticated !== true) ? <RedMainBtn to='/register' name='إشترك الأن !' /> : <RedMainBtn href='#courses' name='الكورسات !' />}
+              {
+                (dataAuth.isAuthenticated !== true) ? <a href='#courses' className='flat-btn d-flex gap-1 align-items-center' dir='rtl'>
+                  <span style={{ 'color': 'var(--color-default2)' }}>الصفوف </span>
+                  <span style={{ 'color': 'var(--red-light)' }}>الدراسية</span>
+                </a> : <></>
+              }
             </div>
           </div>
-        </div>
-
-
+        </motion.div>
       </section>
       <section className='sec2 d-flex justify-content-center align-items-center'>
         <Waves color={['var(--red-light000)', 'var(--red-light00)', 'var(--red-light0)', 'var(--red-light)']} />
@@ -101,34 +112,12 @@ function Home({ dataAuth }) {
       </section>
 
       <section className='sec3'>
-        <div
-          className='pattern-container'
-          style={{
-            transform: `translateY(${scrollY * 0.00001}px)` // تبطيء حركة التمرير بشكل أكبر
-          }}
-        >
-          {[...Array(15)].map((_, index) => {
-            const IconComponent = icons[Math.floor(Math.random() * icons.length)];
-            return (
-              <div
-                className='pattern-item'
-                key={index}
-                style={{
-                  left: `${Math.random() * 90}vw`, // توزيع عشوائي عبر العرض
-                  top: `${Math.random() * 90}vh`, // توزيع عشوائي عبر الارتفاع
-                  fontSize: '2rem', // حجم ثابت للرموز
-                }}
-              >
-                <IconComponent />
-              </div>
-            );
-          })}
-        </div>
-
-        <div className='row notes justify-content-center gap-5'>
-          <NoteBox rotate='rotate(15deg)' bgColor='var(--text-cyan-700)' img={Quiz_img} col='col-lg-3' name='احضر امتحانات دورية ومستمرة' />
-          <NoteBox rotate='rotate(-10deg)' bgColor='var(--red-light)' img={Loop_img} col='col-lg-3' name='شاهد دروسك اكتر من مرة' />
-          <NoteBox rotate='rotate(10deg)' bgColor='var(--text-cyan-500)' img={Clock_img} col='col-lg-3' name='وفر وقت المواصلات والسنتر' />
+        <div className='container'>
+          <div className='row justify-content-center'>
+            <NoteBox2 direction="right" once={true} img={Quiz_img} bgColor='var(--text-cyan-700)' col='col-lg-4' name='احضر امتحانات دورية ومستمرة' />
+            <NoteBox2 direction="scale_up" once={true} img={Loop_img} bgColor='var(--red-light)' col='col-lg-4' name='شاهد دروسك اكتر من مرة' />
+            <NoteBox2 direction="left" once={true} img={Clock_img} bgColor='var(--text-cyan-500)' col='col-lg-4' name='وفر وقت المواصلات والسنتر' />
+          </div>
         </div>
       </section>
       <section className='sec4' id='courses'>
@@ -152,9 +141,14 @@ function Home({ dataAuth }) {
                     {
                       grades.grades.map((grade, i) => {
                         return (
-                          <div key={i} className='col-lg-4 mb-5'>
+                          <motion.div
+                          variants={fadeIn("scale_up", 0.2)}
+                          initial="hidden"
+                          whileInView={"show"}
+                          viewport={{ once: true, amount: 0.7 }}
+                          key={i} className='col-lg-4 mb-5'>
                             <Card1 id={grade.id} title={grade.name} description={grade.description} />
-                          </div>
+                          </motion.div>
                         )
                       })
                     }
