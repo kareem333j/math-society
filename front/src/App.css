@@ -7,7 +7,7 @@
   --color-default2: #000;
   --color-black: #000;
   --logo-font-size: 2em;
-  --button-font-size: 1em;
+  --button-font-size: 1em;    
   --blue-light: #74C0FC;
   --blue-light: #67e8f9;
   --red1: rgb(239 68 68/1);
@@ -91,7 +91,8 @@
   --table-even: #f5f5f5;
 
   /* DialogScreen */
-  --questions-bg-form: rgba(243, 243, 243, 0.843)
+  --questions-bg-form: rgba(243, 243, 243, 0.843);
+  --background-shadow: rgba(0, 0, 0, .4);
 }
 
 [data-theme="dark"] {
@@ -282,7 +283,6 @@ a {
   right: 30px;
   width: 250px;
   height: 50px;
-  background-color: var(--blue-light);
   z-index: -1;
   transform: skewX(20deg);
 }
@@ -341,14 +341,25 @@ a {
 .sec3 {
   position: relative;
   background: var(--color-dark-2);
-  /* خلفية فاتحة تميز القسم */
   overflow: hidden;
-  /* لإخفاء أي جزء من الرموز يخرج عن الحاوية */
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
   min-height: 50vh;
+  background-image: url('./assets/images/background/background-pattern.jpg');
+  background-position: center center;
+  position: relative;
+}
+.sec3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-dark-1);
+  opacity: 0.9;
 }
 
 .pattern-container {
@@ -520,4 +531,36 @@ a {
     width: 330px;
   }
 
+}
+
+
+
+/* flat button */
+.flat-btn{
+  position: relative;
+  padding: 0;
+}
+.flat-btn span{
+  padding: 0;
+  font-size: 1.1em;
+}
+.flat-btn::before{
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  width: 50%;
+  height: 3px;
+  background: var(--red-light);
+  transition: 0.5s;
+  border-radius: 10px;
+}
+.flat-btn:hover::before{
+  right: 50%;
+}
+.flat-btn:hover span:first-child{
+  color: var(--red-light) !important;
+}
+.flat-btn:hover span:last-child{
+  color: var(--color-default2) !important;
 }

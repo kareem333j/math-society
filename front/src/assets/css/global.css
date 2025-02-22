@@ -1,4 +1,4 @@
-#note-box{
+/* #note-box{
     height: 90%;
     text-align: center;
     display: flex;
@@ -25,4 +25,101 @@
     top: 65%;
     color: #fff;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+} */
+
+#note-box{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+#note-box .image{
+    position: relative;
+    width: 55%;
+}
+#note-box img{
+    width: 500px;
+    padding: 20px;
+    border-radius: 100%;
+    margin-bottom: 20px;
+}
+#note-box h3{
+    font-size: 1.5em;
+    padding: 7px 15px;
+    border-radius: 5px;
+    position: absolute;
+    top: 65%;
+    color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+@media (max-width:768px) {
+    #note-box .image{
+        width: 30%;
+    }
+}
+@media (max-width:600px) {
+    #note-box .image{
+        width: 40%;
+    }
+}
+@media (max-width:500px) {
+    #note-box .image{
+        width: 50%;
+    }
+    .note-box2{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 !important;
+    }
+}
+
+/* note box2 */
+.note-box2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.note-box2 .box{
+    overflow: hidden;
+    background-color: var(--color-dark-1);
+    color: var(--color-default2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px 25px;
+    border-radius: 10px;
+    flex-direction: column;
+    gap: 30px;
+    box-shadow: var(--default-shadow);
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    transition: 0.4s all ease;
+}
+.note-box2 .box:after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: var(--red-light);
+    height: 5px;
+    width: 100%;
+    transition: 0.4s all ease;
+}
+.note-box2 .box:hover:after{
+    height: 100%;
+    opacity: 0.3;
+}
+.note-box2 .box img{
+    width: 140px;
+    border-radius: 100%;
+    padding: 10px;
+}
+.note-box2 h3{
+    font-size: 1.5em;
 }
