@@ -18,7 +18,6 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { InputAdornment } from "@mui/material";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { styled } from '@mui/material/styles';
-import { domain } from "../../../../../Axios";
 
 const BpIcon = styled('span')(({ theme }) => ({
     borderRadius: 3,
@@ -363,7 +362,7 @@ export const EditSession = (props) => {
                         onChange={(e) => handleQFieldsChange(e, q_id)}
                         name="image"
                         accept='.png, .jpg'
-                        nullMSG={(questionsList[index].img !== null) ? <a href={`${domain}${questionsList[index].img}`} target="blank">{(questionsList[index].img.length > 50) ? `...${questionsList[index].img.substr(0, 50)}` : questionsList[index].img}</a> : 'لم تقم بتحميل اي صورة'}
+                        nullMSG={(questionsList[index].img !== null) ? <a href={`${questionsList[index].img}`} target="blank">{(questionsList[index].img.length > 50) ? `...${questionsList[index].img.substr(0, 50)}` : questionsList[index].img}</a> : 'لم تقم بتحميل اي صورة'}
                         nullMSGStyle={{ 'fontSize': '0.8em' }}
                         btnSize='small'
                     />
@@ -392,7 +391,7 @@ export const EditSession = (props) => {
                                         onChange={(e) => { handleChoiceChange(e, q_id, ch.id) }}
                                         name="image"
                                         accept='.png, .jpg'
-                                        nullMSG={(questionsList[index].choices[i].img !== null) ? <a href={`${domain}${questionsList[index].choices[i].img}`} target="blank">{(questionsList[index].choices[i].img.length > 25) ? `...${questionsList[index].choices[i].img.substr(0, 25)}` : questionsList[index].choices[i].img}</a> : 'لم تقم بتحميل اي صورة'}
+                                        nullMSG={(questionsList[index].choices[i].img !== null) ? <a href={`${questionsList[index].choices[i].img}`} target="blank">{(questionsList[index].choices[i].img.length > 25) ? `...${questionsList[index].choices[i].img.substr(0, 25)}` : questionsList[index].choices[i].img}</a> : 'لم تقم بتحميل اي صورة'}
                                         nullMSGStyle={{ 'fontSize': '0.8em' }}
                                         btnSize='small'
                                     />
