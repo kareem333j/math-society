@@ -6,7 +6,6 @@ import LoadingGradient from '../loading/Loading2';
 import Party1 from '../party/party1';
 import { QuizResults } from './QuizResults';
 import useLocalStorage from 'use-local-storage';
-import { baseURLMediaTypeImage } from '../../Axios';
 import CloseIcon from '@mui/icons-material/Close';
 
 var timerConst = {}
@@ -408,10 +407,10 @@ function Quiz({ id, dataAuth, close_screen, full_screen }) {
                                                 {
                                                     (question.img != null) ? <div onClick={
                                                         () => {
-                                                            setDataImage({ src: `${baseURLMediaTypeImage}${question.img}`, alt: question.title });
+                                                            setDataImage({ src: `${question.img}`, alt: question.title });
                                                             setViewImageWindow(true);
                                                         }
-                                                    } className='w-90' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0', 'cursor':'pointer' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${question.img}`} alt='question-image' /></div> : ''
+                                                    } className='w-90' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0', 'cursor':'pointer' }}><img className='w-100 img' src={`${question.img}`} alt='question-image' /></div> : ''
                                                 }
                                             </div>
                                             <div className='choices-div'>
@@ -432,11 +431,11 @@ function Quiz({ id, dataAuth, close_screen, full_screen }) {
                                                                             {
                                                                                 (choice.img != null) ? <div onClick={
                                                                                     () => {
-                                                                                        setDataImage({ src: `${baseURLMediaTypeImage}${choice.img}`, alt: choice.choice });
+                                                                                        setDataImage({ src: `${choice.img}`, alt: choice.choice });
                                                                                         setViewImageWindow(true);
                                                                                     }
                                                                                 }
-                                                                                    className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${choice.img}`} alt='question-image' /></div> : ''
+                                                                                    className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${choice.img}`} alt='question-image' /></div> : ''
                                                                             }
                                                                         </div>
                                                                     } />

@@ -1,6 +1,5 @@
 import { Button, FormControl, FormControlLabel, RadioGroup, Slider } from "@mui/material";
 import { useEffect, useState } from "react";
-import axiosInstance, { baseURLMediaTypeImage } from "../../Axios";
 import LoadingGradient from "../loading/Loading2";
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -208,7 +207,7 @@ export const QuizResults = (props) => {
                                                         }
                                                     </div>
                                                     {
-                                                        (question.img != null) ? <div className='w-90' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${question.img}`} alt='question-image' /></div> : ''
+                                                        (question.img != null) ? <div className='w-90' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${question.img}`} alt='question-image' /></div> : ''
                                                     }
                                                 </div>
                                                 <div className='choices-div'>
@@ -228,7 +227,7 @@ export const QuizResults = (props) => {
                                                                                 <div className='d-flex gap-2 flex-column w-100'>
                                                                                     {choice.choice}
                                                                                     {
-                                                                                        (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${choice.img}`} alt='question-image' /></div> : ''
+                                                                                        (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${choice.img}`} alt='question-image' /></div> : ''
                                                                                     }
                                                                                 </div>
                                                                             } />
@@ -239,7 +238,7 @@ export const QuizResults = (props) => {
                                                                             <div className='d-flex gap-2 flex-column w-100'>
                                                                                 {choice.choice}
                                                                                 {
-                                                                                    (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${choice.img}`} alt='question-image' /></div> : ''
+                                                                                    (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${choice.img}`} alt='question-image' /></div> : ''
                                                                                 }
                                                                             </div>
                                                                         } />
@@ -252,7 +251,7 @@ export const QuizResults = (props) => {
                                                                                     <div className='d-flex gap-2 flex-column w-100'>
                                                                                         {choice.choice}
                                                                                         {
-                                                                                            (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${choice.img}`} alt='question-image' /></div> : ''
+                                                                                            (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${choice.img}`} alt='question-image' /></div> : ''
                                                                                         }
                                                                                     </div>
                                                                                 } />
@@ -263,7 +262,7 @@ export const QuizResults = (props) => {
                                                                                 <div className='d-flex gap-2 flex-column w-100'>
                                                                                     {choice.choice}
                                                                                     {
-                                                                                        (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${choice.img}`} alt='question-image' /></div> : ''
+                                                                                        (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${choice.img}`} alt='question-image' /></div> : ''
                                                                                     }
                                                                                 </div>
                                                                             } />
@@ -276,7 +275,7 @@ export const QuizResults = (props) => {
                                                                                     <div className='d-flex gap-2 flex-column w-100'>
                                                                                         {choice.choice}
                                                                                         {
-                                                                                            (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${choice.img}`} alt='question-image' /></div> : ''
+                                                                                            (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${choice.img}`} alt='question-image' /></div> : ''
                                                                                         }
                                                                                     </div>
                                                                                 } />
@@ -287,7 +286,7 @@ export const QuizResults = (props) => {
                                                                                 <div className='d-flex gap-2 flex-column w-100'>
                                                                                     {choice.choice}
                                                                                     {
-                                                                                        (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${choice.img}`} alt='question-image' /></div> : ''
+                                                                                        (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${choice.img}`} alt='question-image' /></div> : ''
                                                                                     }
                                                                                 </div>
                                                                             } />
