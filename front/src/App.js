@@ -59,15 +59,15 @@ function App() {
 
       // فك تشفير الـ access_token للتحقق من صلاحيته
       const decodedToken = jwtDecode(accessToken);
-      const now = Math.ceil(Date.now() / 1000);
+      // const now = Math.ceil(Date.now() / 1000);
 
       // إذا كان الـ access_token منتهي الصلاحية، قم بحذف التوكينز وتوجيه المستخدم إلى صفحة تسجيل الدخول
-      if (decodedToken.exp < now) {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
-        window.location.href = '/login';
-        return;
-      }
+      // if (decodedToken.exp < now) {
+      //   localStorage.removeItem('access_token');
+      //   localStorage.removeItem('refresh_token');
+      //   window.location.href = '/login';
+      //   return;
+      // }
 
       // إذا كان الـ access_token صالحًا، قم بتعيين المستخدم وجلب بياناته
       setUser(decodedToken);
