@@ -392,7 +392,8 @@ export default function UserProfile(props) {
                                                     <tr>
                                                         <th className='td-id'>#</th>
                                                         <th className='head'><span>رقم العملية</span></th>
-                                                        <th className='head'><span>إجمالي سعر الفاتورة</span></th>
+                                                        <th className='head'><span>إجمالي سعر الكورس</span></th>
+                                                        <th className='head'><span>المبغ المدفوع</span></th>
                                                         <th className='head'><span> التخفيض</span></th>
                                                         <th className='head'><span>الكوبون</span></th>
                                                         <th className='head'><span> المشتريات</span></th>
@@ -407,11 +408,12 @@ export default function UserProfile(props) {
                                                                 <tr key={i}>
                                                                     <td className='td-id'>{invoice.id}</td>
                                                                     <td><span style={{ 'color': 'var(--red-light)', 'fontWeight': 'bold' }}>{invoice.transaction}</span></td>
+                                                                    <td>{parseFloat(invoice.course_price).toFixed(2)} ج</td>
                                                                     <td>{parseFloat(invoice.price).toFixed(2)} ج</td>
                                                                     <td>0.00 ج</td>
                                                                     <td>لا يوجد</td>
                                                                     <td>{invoice.course__title}</td>
-                                                                    <td>{(invoice.is_active === true) ? <span className='active'>تم الدفع</span> : <span className='not-paid'>في انتظار الدفع ...</span>}</td>
+                                                                    <td>{(invoice.is_active === true) ? <span className='active'>تم الدفع</span> : <span className='not-paid'>تحت المراجعة ...</span>}</td>
                                                                     <td>{dateFormatter(invoice.request_dt)}</td>
                                                                 </tr>
                                                             )

@@ -9,6 +9,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
 import { enqueueSnackbar } from "notistack";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 
 
@@ -110,7 +111,11 @@ export default function Payments(props) {
                             <td>${request.course_info.title}</td>
                         </tr>
                         <tr>
-                            <th>المبلغ المطلوب</th>
+                            <th>سعر الكورس</th>
+                            <td>${request.course_price} ج</td>
+                        </tr>
+                        <tr>
+                            <th>المبلغ المدفوع</th>
                             <td>${request.price} ج</td>
                         </tr>
                         <tr>
@@ -204,6 +209,199 @@ export default function Payments(props) {
             });
     }
 
+    const dataTable = (type) => {
+        return (
+            <table>
+                <thead>
+                    <tr>
+                        <th className='td-id'>#</th>
+                        <th className='head'><span>المستخدم</span></th>
+                        <th className='head'><span>رقم الهاتف</span></th>
+                        <th className='head'><span>رقم العملية</span></th>
+                        <th className='head'><span>رقم الهاتف المحول منه</span></th>
+                        <th className='head'><span>تاريخ العملية</span></th>
+                        <th className='head'><span>حالة الدفع</span></th>
+                        <th className='head'><span>الكورس</span></th>
+                        <th className='head'><span>سعر الكورس</span></th>
+                        <th className='head'><span>المبلغ الدفوع</span></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        requests.map((request) => {
+                            if (type === "un_paid") {
+                                if (!request.is_active) {
+                                    return (
+                                        <tr key={request.id}>
+                                            <td className='td-id'>{request.id}</td>
+                                            <td>
+                                                <div className='user-main-info d-flex flex-row align-items-center'>
+                                                    <div>
+                                                        <Avatar className='avatar' sx={{ p: 0, 'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center' }} data-content={request.user_info.first_name[0]} alt="Remy Sharp" />
+                                                    </div>
+                                                    <div className='content d-flex'>
+                                                        <h3>{((request.user_info.first_name + ' ' + request.user_info.last_name).length > 26) ? `${(request.user_info.first_name + ' ' + request.user_info.last_name).substring(0, 26)}...` : (request.user_info.first_name + ' ' + request.user_info.last_name)}</h3>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {
+                                                    (request.user_info.phone.length <= 0) ? 'لايوجد'
+                                                        :
+                                                        request.user_info.phone
+                                                }
+                                            </td>
+                                            <td>
+                                                <span style={{ 'color': 'var(--red-light)', 'fontWeight': 'bold' }}>{request.transaction}</span>
+                                            </td>
+                                            <td>
+                                                {
+                                                    (request.phone.length <= 0) ? 'لايوجد'
+                                                        :
+                                                        request.phone
+                                                }
+                                            </td>
+                                            <td>{dateFormatter(request.request_dt)}</td>
+                                            <td>
+                                                {
+                                                    (request.is_active) ? <span className='active'>تم الدفع</span>
+                                                        :
+                                                        <span className='not-active'>غير مدفوع</span>
+                                                }
+                                            </td>
+                                            <td>{(request.course_info.title.length > 26) ? `...${(request.course_info.title).substring(0, 26)}` : request.course_info.title}</td>
+                                            <td>{request.course_price} ج</td>
+                                            <td>{request.price} ج</td>
+                                            <td>
+                                                <div className='d-flex gap-4 px-3'>
+                                                    <Tooltip title="تفاصيل">
+                                                        <IconButton
+                                                            size="large"
+                                                            edge="start"
+                                                            color="inherit"
+                                                            aria-label="details"
+                                                            className='custom-edit-button options-btn'
+                                                            // onClick={() => handleDetailsBtn(request.id, request.is_active)}
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false"
+                                                        >
+                                                            <MoreHorizIcon />
+                                                        </IconButton>
+                                                    </Tooltip>
+
+                                                    <ul className={`dropdown-menu dropdown-menu${(props.data_theme) ? '-dark' : ''}`}>
+                                                        {
+                                                            (request.is_active) ?
+                                                                <>
+                                                                    <li onClick={() => handleDetailsBtn(request.id, request.is_active, 'normal')}><span className="dropdown-item" style={{ "cursor": "pointer" }}>تفاصيل</span></li>
+                                                                    <li onClick={() => handleDetailsBtn(request.id, request.is_active, 'deActive')}><span className="dropdown-item" style={{ "cursor": "pointer" }}>الغاء التفعيل</span></li>
+                                                                </>
+                                                                :
+                                                                <li onClick={() => handleDetailsBtn(request.id, request.is_active, 'normal')}><span className="dropdown-item" style={{ "cursor": "pointer" }}>تفعيل</span></li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )
+                                } else {
+                                    if(requests.length <= 0)
+                                        return <span className="w-100 text-start" style={{ 'fontSize': '1.3em', 'color': 'var(--red1)' }}>
+                                            لا يوجد عمليات غير مدفوعه
+                                        </span>
+                                }
+
+                            } else {
+                                if (request.is_active) {
+                                    return (
+                                        <tr key={request.id}>
+                                            <td className='td-id'>{request.id}</td>
+                                            <td>
+                                                <div className='user-main-info d-flex flex-row align-items-center'>
+                                                    <div>
+                                                        <Avatar className='avatar' sx={{ p: 0, 'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center' }} data-content={request.user_info.first_name[0]} alt="Remy Sharp" />
+                                                    </div>
+                                                    <div className='content d-flex'>
+                                                        <h3>{((request.user_info.first_name + ' ' + request.user_info.last_name).length > 26) ? `${(request.user_info.first_name + ' ' + request.user_info.last_name).substring(0, 26)}...` : (request.user_info.first_name + ' ' + request.user_info.last_name)}</h3>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {
+                                                    (request.user_info.phone.length <= 0) ? 'لايوجد'
+                                                        :
+                                                        request.user_info.phone
+                                                }
+                                            </td>
+                                            <td>
+                                                <span style={{ 'color': 'var(--red-light)', 'fontWeight': 'bold' }}>{request.transaction}</span>
+                                            </td>
+                                            <td>
+                                                {
+                                                    (request.phone.length <= 0) ? 'لايوجد'
+                                                        :
+                                                        request.phone
+                                                }
+                                            </td>
+                                            <td>{dateFormatter(request.request_dt)}</td>
+                                            <td>
+                                                {
+                                                    (request.is_active) ? <span className='active'>تم الدفع</span>
+                                                        :
+                                                        <span className='not-active'>غير مدفوع</span>
+                                                }
+                                            </td>
+                                            <td>{(request.course_info.title.length > 26) ? `...${(request.course_info.title).substring(0, 26)}` : request.course_info.title}</td>
+                                            <td>{request.course_price} ج</td>
+                                            <td>{request.price} ج</td>
+                                            <td>
+                                                <div className='d-flex gap-4 px-3'>
+                                                    <Tooltip title="تفاصيل">
+                                                        <IconButton
+                                                            size="large"
+                                                            edge="start"
+                                                            color="inherit"
+                                                            aria-label="details"
+                                                            className='custom-edit-button options-btn'
+                                                            // onClick={() => handleDetailsBtn(request.id, request.is_active)}
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false"
+                                                        >
+                                                            <MoreHorizIcon />
+                                                        </IconButton>
+                                                    </Tooltip>
+
+                                                    <ul className={`dropdown-menu dropdown-menu${(props.data_theme) ? '-dark' : ''}`}>
+                                                        {
+                                                            (request.is_active) ?
+                                                                <>
+                                                                    <li onClick={() => handleDetailsBtn(request.id, request.is_active, 'normal')}><span className="dropdown-item" style={{ "cursor": "pointer" }}>تفاصيل</span></li>
+                                                                    <li onClick={() => handleDetailsBtn(request.id, request.is_active, 'deActive')}><span className="dropdown-item" style={{ "cursor": "pointer" }}>الغاء التفعيل</span></li>
+                                                                </>
+                                                                :
+                                                                <li onClick={() => handleDetailsBtn(request.id, request.is_active, 'normal')}><span className="dropdown-item" style={{ "cursor": "pointer" }}>تفعيل</span></li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )
+                                } else {
+                                    if(requests.length <= 0)
+                                        return <span className="w-100 text-start" style={{ 'fontSize': '1.3em', 'color': 'var(--red1)' }}>
+                                            لا يوجد عمليات مدفوعه
+                                        </span>
+                                }
+                            }
+
+                        })
+                    }
+                </tbody>
+            </table>
+        )
+    }
+
     return (
         <div className="payments w-100">
             <LinearIndeterminate load={loadPayment} />
@@ -231,92 +429,21 @@ export default function Payments(props) {
                         :
                         (loading === true) ? <LoadingGradient />
                             :
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th className='td-id'>#</th>
-                                        <th className='head'><span>المستخدم</span></th>
-                                        <th className='head'><span>رقم الهاتف</span></th>
-                                        <th className='head'><span>رقم العملية</span></th>
-                                        <th className='head'><span>تاريخ العملية</span></th>
-                                        <th className='head'><span>حالة الدفع</span></th>
-                                        <th className='head'><span>الكورس</span></th>
-                                        <th className='head'><span>السعر</span></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        requests.map((request) => {
-                                            return (
-                                                <tr key={request.id}>
-                                                    <td className='td-id'>{request.id}</td>
-                                                    <td>
-                                                        <div className='user-main-info d-flex flex-row align-items-center'>
-                                                            <div>
-                                                                <Avatar className='avatar' sx={{ p: 0, 'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center' }} data-content={request.user_info.first_name[0]} alt="Remy Sharp" />
-                                                            </div>
-                                                            <div className='content d-flex'>
-                                                                <h3>{((request.user_info.first_name + ' ' + request.user_info.last_name).length > 26) ? `${(request.user_info.first_name + ' ' + request.user_info.last_name).substring(0, 26)}...` : (request.user_info.first_name + ' ' + request.user_info.last_name)}</h3>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        {
-                                                            (request.user_info.phone.length <= 0) ? 'لايوجد'
-                                                                :
-                                                                request.user_info.phone
-                                                        }
-                                                    </td>
-                                                    <td>
-                                                        <span style={{ 'color': 'var(--red-light)', 'fontWeight': 'bold' }}>{request.transaction}</span>
-                                                    </td>
-                                                    <td>{dateFormatter(request.request_dt)}</td>
-                                                    <td>
-                                                        {
-                                                            (request.is_active) ? <span className='active'>تم الدفع</span>
-                                                                :
-                                                                <span className='not-active'>غير مدفوع</span>
-                                                        }
-                                                    </td>
-                                                    <td>{(request.course_info.title.length > 26) ? `...${(request.course_info.title).substring(0, 26)}` : request.course_info.title}</td>
-                                                    <td>{request.price} ج</td>
-                                                    <td>
-                                                        <div className='d-flex gap-4 px-3'>
-                                                            <Tooltip title="تفاصيل">
-                                                                <IconButton
-                                                                    size="large"
-                                                                    edge="start"
-                                                                    color="inherit"
-                                                                    aria-label="details"
-                                                                    className='custom-edit-button options-btn'
-                                                                    // onClick={() => handleDetailsBtn(request.id, request.is_active)}
-                                                                    data-bs-toggle="dropdown"
-                                                                    aria-expanded="false"
-                                                                >
-                                                                    <MoreHorizIcon />
-                                                                </IconButton>
-                                                            </Tooltip>
+                            <>
+                                <div className="w-100 d-flex justify-content-between mt-3 pe-2 align-items-center">
+                                    <h4 style={{ 'color': 'var(--color-default2)' }} className="data-title">عمليات غير مدفوعه <ArrowDropDownIcon /></h4>
+                                </div>
+                                {
+                                    dataTable('un_paid')
+                                }
 
-                                                            <ul className={`dropdown-menu dropdown-menu${(props.data_theme) ? '-dark' : ''}`}>
-                                                                {
-                                                                    (request.is_active) ?
-                                                                        <>
-                                                                            <li onClick={() => handleDetailsBtn(request.id, request.is_active, 'normal')}><span className="dropdown-item" style={{ "cursor": "pointer" }}>تفاصيل</span></li>
-                                                                            <li onClick={() => handleDetailsBtn(request.id, request.is_active, 'deActive')}><span className="dropdown-item" style={{ "cursor": "pointer" }}>الغاء التفعيل</span></li>
-                                                                        </>
-                                                                        :
-                                                                        <li onClick={() => handleDetailsBtn(request.id, request.is_active, 'normal')}><span className="dropdown-item" style={{ "cursor": "pointer" }}>تفعيل</span></li>
-                                                                }
-                                                            </ul>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
-                                </tbody>
-                            </table>
+                                <div className="w-100 d-flex justify-content-between mt-4 pe-2 align-items-center">
+                                    <h4 style={{ 'color': 'var(--color-default2)' }} className="data-title">عمليات تم دفعها <ArrowDropDownIcon /></h4>
+                                </div>
+                                {
+                                    dataTable('paid')
+                                }
+                            </>
                 }
             </div>
         </div>

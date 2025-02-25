@@ -4,6 +4,8 @@ import LogoImg from '../../../../assets/images/logo.svg';
 import LogoImgDark from '../../../../assets/images/logo1.svg';
 import useLocalStorage from "use-local-storage";
 import { LoveBtn } from "../../../inherit/LoveBtn";
+import LogoImg from '../../../../assets/images/logos/logo_white.png';
+import LogoImgDark from '../../../../assets/images/logos/logo_dark.png';
 
 
 function TypeVideo(props) {
@@ -52,12 +54,19 @@ function TypeVideo(props) {
             })
             .catch((err) => { console.log(err) })
     }
+
+    const VideoEmbed = ({ embedCode }) => {
+        return (
+            <div dangerouslySetInnerHTML={{ __html: embedCode }} ></div>
+        );
+    };
+
     return (
         <>
             <div className='player_wrapper d-flex justify-content-center align-items-center flex-column'>
                 <div className="player-div-1">
-                    <img className="hide-btn" src={storage ? LogoImgDark : LogoImg} alt='logo' />
-                    <iframe className="custom-plyr" src={videoData.video_embed} title="Google Drive Video" allow="autoplay" allowFullScreen></iframe>
+                    <img className="hide-btn p-2" src={storage ? LogoImgDark : LogoImg} alt='logo' />
+                    <VideoEmbed embedCode={videoData.video_embed}/>
                     <div className="player-div-2"></div>
                 </div>
                 <h3 className='title w-100 d-flex justify-content-start align-items-center'>{videoData.title}</h3>

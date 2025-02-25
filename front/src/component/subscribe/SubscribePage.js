@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Container } from "react-bootstrap"
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import './subscribe.css';
@@ -17,6 +17,11 @@ import { AlertSuccess2 } from "../errors/Alert2";
 import ClipboardCopy from "../inherit/CopyField";
 import { useSnackbar } from "notistack";
 import { Helmet } from "react-helmet";
+import { CustomTextField } from "../admin/dashboard/inherit/fields/TextField";
+import DialogScreen from "../admin/dashboard/inherit/Dialog";
+import PaymentForm from "./PaymrntForm";
+import withReactContent from 'sweetalert2-react-content';
+import Swal from "sweetalert2";
 
 
 export const SubscribePage = (props) => {
@@ -26,6 +31,8 @@ export const SubscribePage = (props) => {
     var dataAuth = props.dataAuth;
     const param = useParams();
     const course_id = param.course_id;
+    const paymentForm = useRef();
+    const [openPaymentForm, setOpenPaymentForm] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
@@ -113,10 +120,38 @@ export const SubscribePage = (props) => {
         AlertSuccess2(dataAlert);
     }
 
+    const deleteTransaction = () => {
+        withReactContent(Swal).fire({
+            title: "! حذف ",
+            text: "هل متأكد من حذف عملية تأكيد الدفع هذه",
+            icon: "question",
+            cancelButtonText: "إلغاء",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "نعم, حذف",
+        }).then((response) => {
+            if (response.isConfirmed) {
+                setLoading2(true);
+                axiosInstance
+                    .delete(`courses/payment/process/${course_id}/delete`, { transaction: transactionNumberIfExists })
+                    .then((response) => {
+                        setLoading2(false);
+                        getCourse();
+                        getUserCourseIfExists();
+                        handleClickVariant('success', "تم الحذف بنجاح");
+                    })
+                    .catch((err) => {
+                        setLoading2(false);
+                    });
+            }
+        })
+    }
+
     const handelPayment1 = () => {
         setLoading2(true);
         axiosInstance
-            .post(`courses/payment/process1`, {
+            .post(`courses/payment/process`, {
                 course: course_id
             })
             .then((response) => {
@@ -134,6 +169,9 @@ export const SubscribePage = (props) => {
                 setLoading2(false);
             })
     }
+    const handelPayment = () => {
+        setOpenPaymentForm(true);
+    }
 
     if (loading === true) {
         return <LoadingGradient />
@@ -147,12 +185,15 @@ export const SubscribePage = (props) => {
                     </Helmet>
                     <section className='course-data-subscribe d-flex justify-content-center'>
                         <Container className='d-flex justify-content-center'>
+
+                            <DialogScreen reGetTransaction={getUserCourseIfExists} reGetCourse={getCourse} close_title={'إكمال الدفع'} required_price={courseContent.course.price} data_theme={props.data_theme} course_id={course_id} open={openPaymentForm} setOpen={setOpenPaymentForm} component={PaymentForm} />
                             <div className='row w-100 d-flex justify-content-start align-items-start'>
                                 <div dir='rtl' className={`course-data-subscribe-card ${(changePaymentBtnStep1 === true) ? 'is_subscribe' : ''} col-lg-4 col-md-6`}>
                                     <div className='media w-100 p-0 mb-3'>
                                         <img src={courseContent.course.image} alt='media' />
                                     </div>
-                                    <div className="item d-flex align-items-center">
+                                    <div className="item d-flex align-items-start flex-column w-100">
+                                        <p className="text-danger">الفاتورة</p>
                                         <span className="course-title">{courseContent.course.title}</span>
                                     </div>
                                     <div className="item d-flex justify-content-between align-items-center">
@@ -167,11 +208,11 @@ export const SubscribePage = (props) => {
                                         {
                                             (changePaymentBtnStep1 === true) ?
                                                 <>
-                                                    <SubscribeBtn type='is_subscribed' dataAuth={dataAuth.isAuthenticated} name='في انتظار الدفع...' bgColor='var(--red1)' color='#fff' />
-                                                    <SubscribeBtn onClick={getTransactionNumber} dataAuth={dataAuth.isAuthenticated} name='إظهار رقم العملية' bgColor='var(--title-background)' color='#fff' />
+                                                    <SubscribeBtn type='is_subscribed' dataAuth={dataAuth.isAuthenticated} name='في انتظار المراجعة...' bgColor='var(--title-background)' color='#fff' />
+                                                    <SubscribeBtn onClick={deleteTransaction} dataAuth={dataAuth.isAuthenticated} name='إلغاء' bgColor='var(--red1)' color='#fff' />
                                                 </>
                                                 :
-                                                <SubscribeBtn type='subscribed' onClick={handelPayment1} dataAuth={dataAuth.isAuthenticated} name=' اكمال الدفع !' bgColor='var(--red1)' color='#fff' />
+                                                <SubscribeBtn type='subscribed' onClick={handelPayment} dataAuth={dataAuth.isAuthenticated} name=' اكمال الدفع !' bgColor='var(--red1)' color='#fff' />
                                         }
                                     </div>
                                 </div>

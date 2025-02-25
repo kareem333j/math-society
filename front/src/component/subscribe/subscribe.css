@@ -39,7 +39,7 @@
     z-index: 777 !important;
 }
 .course-data-subscribe-card.is_subscribe{
-    margin-top: 80px !important;
+    margin-top: 140px !important;
 }
 .course-data-subscribe-card .media img{
     width: 100%;
@@ -66,7 +66,7 @@
 }
 
 .course-details-subscribe{
-    min-height: 250px;
+    min-height: 300px;
     justify-content: center;
     align-items: start;
 }
@@ -174,4 +174,28 @@
     .course-details-subscribe{
         margin-top: 150px !important;
     }
+}
+
+
+.payment-form{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.payment-form input{
+    color: #fff !important;
+}
+.payment-form .submit{
+    width: 100%;
+}
+.payment-form div{
+    direction: rtl;
+}
+.payment-form div .input-label{
+    color: var(--color-default2);
+    font-size: 1.1em;
+    width: 100%;
+    padding: 3px;
 }
