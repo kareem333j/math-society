@@ -461,20 +461,26 @@
 
   .navbar .nav-main .more {
     display: flex;
+    margin-left: 16px;
   }
 
   .navbar .nav-main {
     direction: ltr;
     width: 100% !important;
-    justify-content: space-around !important;
+    justify-content: space-between !important;
   }
 
   .navbar .logo img {
-    width: 130px;
+    width: 100px;
+    margin-right: -20px;
   }
 
   #switch .nav-main {
     direction: rtl !important;
+  }
+
+  #switch .nav-main .mode-btn2{
+    margin-right: 36px;
   }
 
 }
