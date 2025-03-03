@@ -68,6 +68,7 @@ axiosInstance.interceptors.response.use(
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('refresh_token');
                 window.location.href = '/login/';
+				// console.log('error here');
                 return Promise.reject(error);
             }
 
@@ -108,10 +109,11 @@ axiosInstance.interceptors.response.use(
                 }
             }
 
-            // إذا كان الـ refresh_token غير صالح، يتم تسجيل خروج المستخدم
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('refresh_token');
-            window.location.href = '/login/';
+			if(localStorage.getItem('access_token') || localStorage.getItem('refresh_token')) {
+				localStorage.removeItem('access_token');
+				localStorage.removeItem('refresh_token');
+				window.location.href = '/login/';
+			}
         }
 
         return Promise.reject(error);
@@ -119,3 +121,4 @@ axiosInstance.interceptors.response.use(
 );
 
 export default axiosInstance;
+
