@@ -6,79 +6,116 @@ export const baseURLMediaTypeImage = `${domain}`;
 export const baseURL = `${domain}/api`;
 
 const axiosInstance = axios.create({
-	baseURL: baseURL,
-	timeout: 1000,
-	headers: {
-		'Content-Type': 'application/json',
-		accept: 'application/json',
-	},
+    baseURL: baseURL,
+    timeout: 10000,
+    headers: {
+        'Content-Type': 'application/json',
+        accept: 'application/json',
+    }, 
 });
 
-// إضافة التوكن بعد إنشاء axiosInstance
-const token = localStorage.getItem('access_token');
-if (token) {
-	axiosInstance.defaults.headers.common['Authorization'] = 'JWT ' + token;
+let isRefreshing = false; 
+let failedQueue = []; 
+
+function processQueue(error, token = null) {
+    failedQueue.forEach((prom) => {
+        if (error) {
+            prom.reject(error);
+        } else {
+            prom.resolve(token);
+        }
+    });
+    failedQueue = [];
 }
 
+// تحديد الـ API المفتوحة للعامة
+axiosInstance.interceptors.request.use((config) => {
+    const publicEndpoints = ['/grades', '/courses'];
+    const isPublic = publicEndpoints.some((endpoint) => config.url.startsWith(endpoint));
+
+    if (!isPublic) {
+        const token = localStorage.getItem('access_token');
+        if (token) {
+            config.headers['Authorization'] = 'JWT ' + token;
+        }
+    }
+
+    return config;
+}, (error) => {
+    return Promise.reject(error);
+});
+
+// التعامل مع الأخطاء وإدارة التوكن
 axiosInstance.interceptors.response.use(
-	(response) => {
-		console.log(response);
-		return response;
-	},
-	async function (error) {
-		const originalRequest = error.config;
+    (response) => response,
+    async (error) => {
+        const originalRequest = error.config;
 
-		if (!error.response) {
-			alert('حدث خطأ في الاتصال بالخادم. تأكد من اتصالك بالإنترنت أو تحقق من إعدادات السيرفر.');
-			return Promise.reject(error);
-		}
+        if (!error.response) {
+            // خطأ في الشبكة أو السيرفر
+            return Promise.reject(error);
+        }
 
-		if (error.response.status === 401 && originalRequest.url === `${baseURL}/token/refresh/`) {
-			window.location.href = '/login/';
-			return Promise.reject(error);
-		}
+        if (error.response.status === 401) {
+            // التحقق مما إذا كان الخطأ بسبب تسجيل الدخول أو انتهاء صلاحية التوكن
+            if (originalRequest.url.includes('/login')) {
+                // إذا كان المستخدم يحاول تسجيل الدخول بكلمة مرور خاطئة، نرجع الخطأ فقط ولا نقوم بإعادة التوجيه
+                return Promise.reject(error);
+            }
 
-		if (error.response.data?.code === 'token_not_valid' && error.response.status === 401) {
-			const refreshToken = localStorage.getItem('refresh_token');
+            if (originalRequest.url === baseURL + '/token/refresh/') {
+                // إذا كان تحديث التوكن نفسه فشل، نوجه المستخدم إلى صفحة تسجيل الدخول
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('refresh_token');
+                window.location.href = '/login/';
+                return Promise.reject(error);
+            }
 
-			if (refreshToken) {
-				try {
-					const tokenParts = JSON.parse(atob(refreshToken.split('.')[1]));
-					const now = Math.ceil(Date.now() / 1000);
+            if (isRefreshing) {
+                return new Promise((resolve, reject) => {
+                    failedQueue.push({ resolve, reject });
+                })
+                    .then((token) => {
+                        originalRequest.headers['Authorization'] = 'JWT ' + token;
+                        return axiosInstance(originalRequest);
+                    })
+                    .catch((err) => {
+                        return Promise.reject(err);
+                    });
+            }
 
-					if (tokenParts.exp > now) {
-						return axiosInstance
-							.post(`${baseURL}/token/refresh/`, { refresh: refreshToken })
-							.then((response) => {
-								localStorage.setItem('access_token', response.data.access);
-								localStorage.setItem('refresh_token', response.data.refresh);
+            originalRequest._retry = true;
+            isRefreshing = true;
 
-								axiosInstance.defaults.headers.common['Authorization'] =
-									'JWT ' + response.data.access;
-								originalRequest.headers['Authorization'] = 'JWT ' + response.data.access;
+            const refreshToken = localStorage.getItem('refresh_token');
+            if (refreshToken) {
+                try {
+                    const tokenParts = JSON.parse(atob(refreshToken.split('.')[1]));
+                    const now = Math.ceil(Date.now() / 1000);
 
-								return axiosInstance(originalRequest);
-							})
-							.catch((err) => {
-								console.log('Error refreshing token:', err);
-								window.location.href = '/login/';
-							});
-					} else {
-						console.log('Refresh token expired');
-						window.location.href = '/login/';
-					}
-				} catch (err) {
-					console.log('Invalid refresh token:', err);
-					window.location.href = '/login/';
-				}
-			} else {
-				console.log('No refresh token available.');
-				window.location.href = '/login/';
-			}
-		}
+                    if (tokenParts.exp > now) {
+                        const response = await axiosInstance.post('/token/refresh/', { refresh: refreshToken });
+                        localStorage.setItem('access_token', response.data.access);
+                        localStorage.setItem('refresh_token', response.data.refresh);
+                        axiosInstance.defaults.headers['Authorization'] = 'JWT ' + response.data.access;
+                        originalRequest.headers['Authorization'] = 'JWT ' + response.data.access;
 
-		return Promise.reject(error);
-	}
+                        processQueue(null, response.data.access);
+                        return axiosInstance(originalRequest);
+                    }
+                } catch (err) {
+                    console.error('Error refreshing token:', err);
+                }
+            }
+
+            // إذا كان الـ refresh_token غير صالح، يتم تسجيل خروج المستخدم
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            window.location.href = '/login/';
+        }
+
+        return Promise.reject(error);
+    }
 );
 
 export default axiosInstance;
