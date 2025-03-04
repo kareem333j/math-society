@@ -244,15 +244,23 @@ function Playlist(props) {
 
     React.useEffect(() => {
         setIsLoaded(true);
-        document.addEventListener('keyup', (event) => {
-            navigator.clipboard.writeText('');
-            contentSec.current.innerHTML = '';
-            alert('Screenshots Disabled -_-');
-        });
         
         const preventKeys = (e) => {
             if (e.ctrlKey && (e.key === 'I' || e.key === 'S' || e.key === 'U')) {
-                e.preventDefault();
+                navigator.clipboard.writeText('');
+                contentSec.current.innerHTML = '';
+            }
+            if (e.key === "PrintScreen") {
+                navigator.clipboard.writeText('');
+                contentSec.current.innerHTML = '';
+            }
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+                navigator.clipboard.writeText('');
+                contentSec.current.innerHTML = '';
+            }
+            if (e.ctrlKey && e.shiftKey && (e.key === 's' || e.key === 'S')) {
+                navigator.clipboard.writeText('');
+                contentSec.current.innerHTML = '';
             }
         };
         document.addEventListener('contextmenu', (e) => e.preventDefault());

@@ -17,7 +17,7 @@ export const PDF = (props) => {
         <div className='pdf-div pb-3'>
             <div className='options d-flex gap-2 justify-content-center align-items-center'>
                 <span style={{ 'fontSize': '1.1em', 'color': 'var(--color-default2)' }}>اذا كنت تريد رؤية الملف بشكل افضل </span>
-                <a className='btn btn-danger fw-bold' target="_blank" rel="noopener noreferrer" href={`${baseURLMedia}${props.path}`}>اضغط هنا</a>
+                <a className='btn btn-danger fw-bold' target="_blank" rel="noopener noreferrer" href={`${props.path}`}>اضغط هنا</a>
             </div>
             <Worker id='worker' workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
                 {
@@ -36,7 +36,7 @@ export const PDF = (props) => {
                             تصغير
                         </button>
                 }
-                <Viewer fileUrl={`${baseURLMedia}${props.path}`} />;
+                <Viewer fileUrl={`${props.path}`} />;
             </Worker>
         </div>
     )

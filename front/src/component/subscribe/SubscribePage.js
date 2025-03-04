@@ -58,8 +58,9 @@ export const SubscribePage = (props) => {
                 history(`/`);
             }
         }
-        if (props.userLoaded === true) {
-            history('/login', { state: { next: location.pathname } });
+        console.log(props.userLoaded);
+        if (props.userLoaded === false) {
+            history('/login');
         }
         getUserCourseIfExists();
         getCourse();
@@ -238,22 +239,22 @@ export const SubscribePage = (props) => {
                                     </div>
                                     <div className='item col-lg-12 col-sm-12 col-md-12 d-flex gap-2'>
                                         <LooksTwoIcon />
-                                        <span className="content">قم بالضغط علي زر إكمال الدفع</span>
+                                        <span className="content">قم بتحويل مبلغ <span className="fw-bold text-danger">({courseContent.course.price}ج)</span> من خلال فودافون كاش علي الرقم التالي : <span className="fw-bold text-danger">( 01023681084 )</span></span>
                                     </div>
                                     <div className='item col-lg-12 col-sm-12 col-md-12 d-flex gap-2'>
                                         <Looks3Icon />
-                                        <span className="content">بعد الضغط علي زر الإكمال سيظهر لك رقم العملية احتفظ بهذا الرقم جيدا..!</span>
+                                        <span className="content">قم بالضغط علي زر إكمال الدفع</span>
                                     </div>
                                     <div className='item col-lg-12 col-sm-12 col-md-12 d-flex gap-2'>
                                         <Looks4Icon />
-                                        <span className="content">قم بالذهاب لأقرب ماكينة دفع فوري وقم بالتحويل علي رقم الهاتف التالي <span className="fw-bold text-danger">( 01023681084 )</span> المبلغ المالي الظاهر امامك في الفاتورة </span>
+                                        <span className="content">قم بإدخال رقم الهاتف الذي حولت منه المبلغ ثم ادخل رقم عملية التحويل ثم ادخل المبلغ قيمة المبلغ الذي قمت بتحويله </span>
                                     </div>
                                     <div className='item col-lg-12 col-sm-12 col-md-12 d-flex gap-2'>
                                         <Looks5Icon />
-                                        <span className="content">بعد ذالك تواصل مع اي من الأرقام التاليه وارسل له من خلال التلجرام او واتساب صورة من فاتورة فوري بعد الدفع وارسل له رقم العملية الذي ظهر امامك عندما قمت بالضغط علي زر الإكمال</span>
+                                        <span className="content">انتظر حتي يتم مراجعة الدفع الخاص بك من قبل فريق الدعم لاتقلق سيتم المراجعه في اسرع وقت ممكن...</span>
                                     </div>
                                     <div className='item col-lg-12 col-sm-12 col-md-12 d-flex gap-2'>
-                                        <span className="content pe-4">ارقام الهاتف التي سترسل لها صورة الدفع رقم العملية هي <span className="fw-bold text-danger">( 01023681084 , 01019180886 )</span></span>
+                                        <span className="content pe-4"></span>
                                     </div>
                                 </div>
                             </div>

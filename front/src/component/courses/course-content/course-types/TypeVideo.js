@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import axiosInstance from "../../../../Axios";
-// import LogoImg from '../../../../assets/images/logo.svg';
-// import LogoImgDark from '../../../../assets/images/logo1.svg';
 import useLocalStorage from "use-local-storage";
 import { LoveBtn } from "../../../inherit/LoveBtn";
 import LogoImg from '../../../../assets/images/logos/logo_white.png';
@@ -14,7 +12,6 @@ function TypeVideo(props) {
     const [userLike, setUserLike] = useState(false);
     const [storage] = useLocalStorage('isDark');
     const videoEmbed = useRef();
-    // const dataUser = props.dataAuth.profile;
 
     useEffect(() => {
         setUserLike(false);
@@ -88,37 +85,3 @@ function TypeVideo(props) {
 }
 
 export default TypeVideo;
-
-
-
-
-
-// to get video with plyr
-// import PlyrComponent from "../../../plyr/Plyr";
-// import { Plyr0 } from "../../../plyr/Plyr";
-// import ReactPlayer from 'react-player';
-// import Plyr from "plyr-react";
-/* <Plyr0
-    source={{
-        type: 'video',
-        sources: [
-            {
-                src: 'https://www.youtube-nocookie.com/embed/kQbMYsQLqCg?si=B0-nxV59KJDEzrZJ',
-                provider: 'youtube',
-                size: 480
-            },
-            {
-                src: 'https://www.youtube-nocookie.com/embed/kQbMYsQLqCg?si=B0-nxV59KJDEzrZJ',
-                provider: 'youtube',
-                size: 720
-            },
-            {
-                src: 'https://www.youtube-nocookie.com/embed/kQbMYsQLqCg?si=B0-nxV59KJDEzrZJ',
-                provider: 'youtube',
-                size: 1080
-            },
-        ],
-    }}
-    
-/> */
-/* <PlyrComponent/> */

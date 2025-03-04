@@ -32,6 +32,7 @@ import { AuthContext } from "./context/AuthContext";
 import { NotificationPage } from "./notifications/Notification";
 import NotificationsAdmin from "./component/admin/dashboard/pages/Notifications";
 import NotificationProvider from "./context/NotificationsContext";
+import { Loading0 } from "./component/loading/Loading0";
 
 function App() {
   const [isDark, setIsDark] = useLocalStorage("isDark", true);
@@ -44,71 +45,79 @@ function App() {
   const [networkError, setNetworkError] = useState(false);
   const location = useLocation();
   const [loadDataUser, setLoadDataUser] = useState(false);
+  const [loading, setLoading] = useState(true);
   const AuthDataContext = useContext(AuthContext);
 
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      const accessToken = localStorage.getItem('access_token');
+  
 
-      // إذا لم يكن هناك access_token، قم بتعيين المستخدم إلى null
-      if (!accessToken) {
-        setUser(null);
-        setLoadDataUser(false);
+  useEffect(() => {
+    setLoading(false);
+    fetchUserProfile();
+  }, []);
+
+  const fetchUserProfile = async () => {
+    setLoading(true);
+    const accessToken = localStorage.getItem('access_token');
+
+    // إذا لم يكن هناك access_token، قم بتعيين المستخدم إلى null
+    if (!accessToken) {
+      setUser(null);
+      setLoadDataUser(false);
+      setLoading(false);
+      return;
+    }
+
+    // فك تشفير الـ access_token للتحقق من صلاحيته
+    const decodedToken = jwtDecode(accessToken);
+    // const now = Math.ceil(Date.now() / 1000);
+
+    // إذا كان الـ access_token منتهي الصلاحية، قم بحذف التوكينز وتوجيه المستخدم إلى صفحة تسجيل الدخول
+    // if (decodedToken.exp < now) {
+    //   localStorage.removeItem('access_token');
+    //   localStorage.removeItem('refresh_token');
+    //   window.location.href = '/login';
+    //   return;
+    // }
+
+    // إذا كان الـ access_token صالحًا، قم بتعيين المستخدم وجلب بياناته
+    setUser(decodedToken);
+    setLoadDataUser(true);
+
+    try {
+      const response = await axiosInstance.get(`profile/${decodedToken.user_id}`);
+      setLoadDataUser(true);
+      setDataProfile({ isAuthenticated: true, profile: response.data });
+      AuthDataContext.setDataProfile({ isAuthenticated: true, profile: response.data });
+      setLoading(false);
+    } catch (error) {
+      setLoadDataUser(false);
+
+      // إذا كان الخطأ 401 Unauthorized، قم بحذف التوكينز وتوجيه المستخدم إلى صفحة تسجيل الدخول
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        window.location.href = '/login';
         return;
       }
 
-      // فك تشفير الـ access_token للتحقق من صلاحيته
-      const decodedToken = jwtDecode(accessToken);
-      // const now = Math.ceil(Date.now() / 1000);
-
-      // إذا كان الـ access_token منتهي الصلاحية، قم بحذف التوكينز وتوجيه المستخدم إلى صفحة تسجيل الدخول
-      // if (decodedToken.exp < now) {
-      //   localStorage.removeItem('access_token');
-      //   localStorage.removeItem('refresh_token');
-      //   window.location.href = '/login';
-      //   return;
-      // }
-
-      // إذا كان الـ access_token صالحًا، قم بتعيين المستخدم وجلب بياناته
-      setUser(decodedToken);
-      setLoadDataUser(true);
-
-      try {
-        const response = await axiosInstance.get(`profile/${decodedToken.user_id}`);
-        setLoadDataUser(false);
-        setDataProfile({ isAuthenticated: true, profile: response.data });
-        AuthDataContext.setDataProfile({ isAuthenticated: true, profile: response.data });
-      } catch (error) {
-        setLoadDataUser(false);
-
-        // إذا كان الخطأ 401 Unauthorized، قم بحذف التوكينز وتوجيه المستخدم إلى صفحة تسجيل الدخول
-        if (error.response && error.response.status === 401) {
+      // إذا كان الخطأ غير 401، قم بإظهار رسالة خطأ
+      alert({
+        action: () => {
           localStorage.removeItem('access_token');
           localStorage.removeItem('refresh_token');
-          window.location.href = '/login';
-          return;
-        }
-
-        // إذا كان الخطأ غير 401، قم بإظهار رسالة خطأ
-        alert({
-          action: () => {
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('refresh_token');
-            window.location.reload();
-          },
-          btn: 'ok',
-          icon: 'error',
-          position: 'center-center',
-          reload: true,
-          title: 'خطأ',
-          text: 'لقد حدث خطأ ما تأكد من اتصالك بالإنترنت ثم قم بإعادة تحميل الصفحة مرة اخري'
-        });
-        setNetworkError(true);
-      }
-    };
-
-    fetchUserProfile();
-  }, []);
+          window.location.reload();
+        },
+        btn: 'ok',
+        icon: 'error',
+        position: 'center-center',
+        reload: true,
+        title: 'خطأ',
+        text: 'لقد حدث خطأ ما تأكد من اتصالك بالإنترنت ثم قم بإعادة تحميل الصفحة مرة اخري'
+      });
+      setNetworkError(true);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const my_app = document.getElementById('app');
@@ -129,6 +138,7 @@ function App() {
   return (
     <SnackbarProvider maxSnack={3}>
       <div className="app" id='app' data-theme={isDark ? "dark" : "light"}>
+        {loading? <Loading0 />: <></>}
         <Header isChecked={isDark} handelMode={() => setIsDark(!isDark)} dataAuth={dataProfile} data_theme={isDark} />
         {(networkError === true) ? <Warning title='تحذير هام' message="هناك خطأ ما قد حدث قد لا يعمل الموقع بشكل سليم تأكد من اتصالك بالإنترنت ثم قم بإعادة تحميل الموقع" /> : <></>}
 

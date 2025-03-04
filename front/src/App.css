@@ -93,6 +93,11 @@
   /* DialogScreen */
   --questions-bg-form: rgba(243, 243, 243, 0.843);
   --background-shadow: rgba(0, 0, 0, .4);
+
+  --loading-1: #000;
+  --loading-2: #252525;
+  --loading-3: #000000;
+  --loading-4: #353535;
 }
 
 [data-theme="dark"] {
@@ -145,6 +150,11 @@
 
   /* DialogScreen */
   --questions-bg-form: var(--color-dark-3);
+
+  --loading-1: #fff;
+  --loading-2: #383838;
+  --loading-3: #fff;
+  --loading-4: #565656;
 }
 
 * {

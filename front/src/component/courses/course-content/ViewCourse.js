@@ -94,28 +94,3 @@ function ViewCourse(props) {
 }
 
 export default ViewCourse;
-
-
-
-
-
-
-
-
-
-/* <Plyr
-    options={options}
-    source={
-        {
-            type: 'video',
-            title: 'Example title',
-            sources: [
-                {
-                    src: `http://127.0.0.1:8000/media/${course[1].content[0].video}`,
-                    type: 'video/mp4',
-                    size: 1080,
-                }
-            ],
-        }
-    }
-/> */

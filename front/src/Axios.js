@@ -30,7 +30,7 @@ function processQueue(error, token = null) {
 
 // تحديد الـ API المفتوحة للعامة
 axiosInstance.interceptors.request.use((config) => {
-    const publicEndpoints = ['/grades', '/courses'];
+    const publicEndpoints = ['/grades'];
     const isPublic = publicEndpoints.some((endpoint) => config.url.startsWith(endpoint));
 
     if (!isPublic) {
@@ -45,30 +45,24 @@ axiosInstance.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
-// التعامل مع الأخطاء وإدارة التوكن
 axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
 
         if (!error.response) {
-            // خطأ في الشبكة أو السيرفر
             return Promise.reject(error);
         }
 
         if (error.response.status === 401) {
-            // التحقق مما إذا كان الخطأ بسبب تسجيل الدخول أو انتهاء صلاحية التوكن
             if (originalRequest.url.includes('/login')) {
-                // إذا كان المستخدم يحاول تسجيل الدخول بكلمة مرور خاطئة، نرجع الخطأ فقط ولا نقوم بإعادة التوجيه
                 return Promise.reject(error);
             }
 
             if (originalRequest.url === baseURL + '/token/refresh/') {
-                // إذا كان تحديث التوكن نفسه فشل، نوجه المستخدم إلى صفحة تسجيل الدخول
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('refresh_token');
                 window.location.href = '/login/';
-				// console.log('error here');
                 return Promise.reject(error);
             }
 
