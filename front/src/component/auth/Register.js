@@ -25,7 +25,8 @@ const errorMsgs = {
   emailUsed: 'هذا البريد مستخدم من قبل',
   phoneUsed: 'هذا الهاتف مستخدم من قبل',
   passwordShort: 'كلمة السر يجب ان تكون 8 احرف علي الأقل',
-  password_confirmation: 'كلمة السر غير متشابهة'
+  password_confirmation: 'كلمة السر غير متشابهة',
+  password_must: 'كلمة السر يجب ان تحتوي علي حرف واحد او رمز واحد علي الأقل',
 }
 
 function Register({ dataAuth }) {
@@ -194,7 +195,7 @@ function Register({ dataAuth }) {
         }
       }
     }
-
+    
     if (dataError.password) {
       if (dataError.password[0] === "This password is too short. It must contain at least 8 characters.") {
         putFailedError('password', errorMsgs.passwordShort);
@@ -202,6 +203,9 @@ function Register({ dataAuth }) {
       if (dataError.password[0] === "Password fields didn't match.") {
         putFailedError('password', errorMsgs.password_confirmation);
         putFailedError('password_confirmation', errorMsgs.password_confirmation);
+      }
+      if(dataError.password[0] === "This password is too common." || dataError.password[0] === "This password is entirely numeric."){
+        putFailedError('password', errorMsgs.password_must);
       }
     }
     if (dataError.password2) {
@@ -270,7 +274,7 @@ function Register({ dataAuth }) {
         }).catch((err) => {
           setLoading(false);
           if (err.response) {
-            // console.log(err);
+            console.log(err);
             if (err.response.status === 400) {
               catchFieldError(err.response.data);
               alert({
@@ -280,7 +284,7 @@ function Register({ dataAuth }) {
                 btn: 'فهمت ذالك',
                 icon: 'error',
                 title: 'خطأ',
-                text: 'لقد حدث خطأ يرجي مراجعة بياناتك مرة اخري.. واذا لم تحل المشكلة قم بالتواصل مع الدعم'
+                text: 'لقد حدث خطأ يرجي مراجعة بياناتك مرة اخري..'
               });
             };
           }
