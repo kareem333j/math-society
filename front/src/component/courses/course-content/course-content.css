@@ -44,7 +44,7 @@
 }
 
 .course-data .container .row {
-    margin-top: 300px;
+    margin-top: 320px;
 }
 
 .extra-section {
@@ -57,9 +57,17 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 2px !important;
 }
-
+.course-data-card .media{
+    position: relative;
+    aspect-ratio: 16 / 9; 
+    max-width: 100%;
+}
 .course-data-card .media img {
     width: 100%;
+    position: relative;
+    aspect-ratio: 16 / 9; 
+    max-width: 100%;
+    object-fit: cover;
 }
 
 .course-data-card .price {
@@ -205,4 +213,7 @@
     .course-details span {
         color: #fff !important;
     }
+    /* .course-data .container .row{
+        margin-top: 30%;
+    } */
 }

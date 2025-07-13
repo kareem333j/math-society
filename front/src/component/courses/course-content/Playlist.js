@@ -124,7 +124,7 @@ function Playlist(props) {
     const contentRef = React.useRef();
     const lecRef = React.useRef();
     let refs = React.useRef([React.createRef(), React.createRef()]);
-    const [currentSessionId, setCurrentSessionId] = React.useState(0);
+    const [currentSessionId, setCurrentSessionId] = React.useState("");
     const [rootExist, setRootExist] = React.useState(false);
     const [contentRoot, setContentRoot] = React.useState(null);
 
@@ -217,9 +217,7 @@ function Playlist(props) {
                 if (currentSessionId !== `${lecIndex}${SessionIndex}`) {
                     if (session.type === 'video') {
                         contentRoot.render(
-                            <>
-                                <TypeVideo videoData={session} dataAuth={props.dataAuth} />
-                            </>
+                            <TypeVideo videoData={session} dataAuth={props.dataAuth} />
                         )
                     } else if (session.type === 'document') {
                         contentRoot.render(
@@ -244,7 +242,7 @@ function Playlist(props) {
 
     React.useEffect(() => {
         setIsLoaded(true);
-        
+
         const preventKeys = (e) => {
             if (e.ctrlKey && (e.key === 'I' || e.key === 'S' || e.key === 'U')) {
                 navigator.clipboard.writeText('');
@@ -288,20 +286,6 @@ function Playlist(props) {
             }
         }
     }, [isPageLoaded]);
-
-    // disable context menu
-    // React.useEffect(() => {
-    //     if (contentRef.current !== undefined) {
-    //         contentRef.current.addEventListener('contextmenu', event => event.preventDefault());
-    //     }
-    // }, [contentRef]);
-    // React.useEffect(() => {
-    //     if (contentSec.current !== undefined) {
-    //         contentSec.current.addEventListener('contextmenu', event => event.preventDefault());
-    //     }
-    // }, [contentSec]);
-
-
 
     const escFunction = React.useCallback((event) => {
         if (event.key === "Escape") {

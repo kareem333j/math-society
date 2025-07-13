@@ -187,8 +187,17 @@
 
 .player-div-1 {
     width: 100%;
-    min-height: 700px;
     position: relative;
+    aspect-ratio: 16 / 9; 
+    max-width: 100%;
+}
+
+.player-div-1 iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .player-div-2 {
@@ -245,31 +254,9 @@
     }
 }
 
-/* @media (max-width:800px) {
-    .content-area {
-        min-height: 40vh;
-        max-height: 100vh;
-        position: relative;
-        overflow-y: scroll;
-        scroll-behavior: smooth;
-        padding: 0 20px 0px 5px !important;
-        margin: 0 !important;
-        background-color: var(--color-dark-1);
+@media (display-capture) {
+    iframe {
+        visibility: hidden !important;
     }
-    
-    .content-area::-webkit-scrollbar {
-        width: 15px;
-    }
-    
-    .content-area::-webkit-scrollbar-track {
-        background: var(--color-dark-4);
-    }
-    
-    .content-area::-webkit-scrollbar-thumb {
-        background: var(--color-dark-3);
-    }
-    
-    .content-area::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
-} */
+}
+

@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, memo, useMemo } from "react";
 import axiosInstance from "../../../../Axios";
-import useLocalStorage from "use-local-storage";
-import { LoveBtn } from "../../../inherit/LoveBtn";
 import LogoImg from '../../../../assets/images/logos/logo_white.png';
 import LogoImgDark from '../../../../assets/images/logos/logo_dark.png';
-
+import useLocalStorage from "use-local-storage";
+import { LoveBtn } from "../../../inherit/LoveBtn";
 
 function TypeVideo(props) {
     const videoData = props.videoData;
@@ -17,8 +16,7 @@ function TypeVideo(props) {
         setUserLike(false);
         setLikes(0);
         getLikes();
-        
-    }, [props.videoData.id]);
+    }, [videoData.id]);
 
     const getLikes = () => {
         axiosInstance
@@ -51,19 +49,53 @@ function TypeVideo(props) {
             })
             .catch((err) => { console.log(err) })
     }
-
-    const VideoEmbed = ({ embedCode }) => {
-        return (
-            <div dangerouslySetInnerHTML={{ __html: embedCode }} ></div>
-        );
+    const extractDriveVideoSrc = (embedCode) => {
+        const match = embedCode.match(/src="([^"]+)"/);
+        return match ? match[1] : null;
     };
+
+    const VideoPlayer = useMemo(() => {
+        const VideoEmbed = ({ embedCode }) => {
+            const src = extractDriveVideoSrc(embedCode);
+
+            useEffect(() => {
+                const iframe = videoEmbed.current?.querySelector("iframe");
+                if (iframe) {
+                    iframe.setAttribute("allowfullscreen", "true");
+                    iframe.setAttribute("allow", "fullscreen");
+                    iframe.style.width = "100%";
+                    iframe.style.height = "100%";
+                }
+            }, [embedCode]);
+
+            return (
+                <div className="video-container" ref={videoEmbed}>
+                    {src && (
+                        <iframe
+                            key={`video-${videoData.id}`}
+                            src={src}
+                            allowFullScreen
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            width="100%"
+                            height="100%"
+                            style={{ border: "none" }}
+                            title="Video Player"
+                            frameBorder="0"
+                        />
+                    )}
+                </div>
+            );
+        };
+
+        return <VideoEmbed embedCode={videoData.video_embed} />;
+    }, [videoData.video_embed, videoData.id]);
 
     return (
         <>
             <div className='player_wrapper d-flex justify-content-center align-items-center flex-column'>
                 <div className="player-div-1">
                     <img className="hide-btn p-2" src={storage ? LogoImgDark : LogoImg} alt='logo' />
-                    <VideoEmbed embedCode={videoData.video_embed}/>
+                    {VideoPlayer}
                     <div className="player-div-2"></div>
                 </div>
                 <h3 className='title w-100 d-flex justify-content-start align-items-center'>{videoData.title}</h3>
@@ -76,7 +108,7 @@ function TypeVideo(props) {
             </div>
             <div className="video-description-div w-100 d-flex flex-column" dir="rtl">
                 <span className="desc-title mb-2">الوصف :</span>
-                <span style={{"whiteSpace": "pre-line"}} className="description">{videoData.description}</span>
+                <span style={{ "whiteSpace": "pre-line" }} className="description">{videoData.description}</span>
             </div>
 
         </>

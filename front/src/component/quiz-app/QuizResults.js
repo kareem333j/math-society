@@ -1,11 +1,13 @@
-import { Button, FormControl, FormControlLabel, RadioGroup, Slider } from "@mui/material";
+import { Button, FormControl, FormControlLabel, IconButton, RadioGroup, Slider, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
-import axiosInstance from "../../Axios";
+import axiosInstance, { baseURLMediaTypeImage } from "../../Axios";
 import LoadingGradient from "../loading/Loading2";
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import InfoIcon from '@mui/icons-material/Info';
+import CloseIcon from '@mui/icons-material/Close';
+
 
 
 export const QuizResults = (props) => {
@@ -51,6 +53,37 @@ export const QuizResults = (props) => {
             });
     }, []);
 
+    // view image window state
+    const [viewImageWindow, setViewImageWindow] = useState(false);
+    const [dataImage, setDataImage] = useState({ src: '', alt: '' });
+
+    const ViewImageWindow = () => {
+        if (viewImageWindow) {
+            return (
+                <div className='view-image-window d-flex justify-content-center align-items-center p-0 pt-5 m-0'>
+                    <div className='close'>
+                        <Tooltip title="غلق">
+                            <IconButton
+                                onClick={() => setViewImageWindow(false)}
+                                size="large"
+                                edge="start"
+                                color="inherit"
+                                aria-label="edit"
+                                className='custom-edit-button options-btn'
+                            >
+                                <CloseIcon size="large" />
+                            </IconButton>
+                        </Tooltip>
+                    </div>
+                    <div className='image-div'>
+                        <img className='img' src={dataImage.src} alt={dataImage.alt} />
+                    </div>
+                </div>
+            )
+        }
+        return null;
+    }
+
 
     const timeFormatter = (seconds) => {
         let hours = parseInt((seconds / 60) / 60);
@@ -63,6 +96,24 @@ export const QuizResults = (props) => {
 
         return `${hours}:${min}:${sec}`
     }
+
+    function convertNumbersToArabic(text) {
+        const map = {
+            '0': '٠',
+            '1': '١',
+            '2': '٢',
+            '3': '٣',
+            '4': '٤',
+            '5': '٥',
+            '6': '٦',
+            '7': '٧',
+            '8': '٨',
+            '9': '٩'
+        };
+
+        return text.replace(/[0-9]/g, (digit) => map[digit]);
+    }
+
 
 
     if (loading === true) {
@@ -81,6 +132,7 @@ export const QuizResults = (props) => {
         } else {
             return (
                 <div className='d-flex justify-content-center align-items-center w-100 flex-column gap-3 mt-1'>
+                    <ViewImageWindow />
                     <div className="w-100 d-flex align-items-center mb-1 fw-bold gap-2 justify-content-between" dir="rtl">
                         <span style={{ 'fontSize': '1.5em', 'color': 'var(--color-default2)' }}>تحليل رقمي <ExpandMoreIcon /></span>
                         {
@@ -170,7 +222,7 @@ export const QuizResults = (props) => {
                         <div className="statistic row w-100 d-flex align-items-center mb-5">
                             <div className="name col-lg-3 col-md-3 col-sm-3 col-5" style={{ 'fontSize': '1.2em', 'color': 'var(--color-default2)' }}>الإجابات الخطأ </div>
                             <div dir="ltr" className="progress col-lg-9 col-md-9 col-sm-9 col-7 p-0">
-                                <div className="progress-bar" style={{ 'width': `${statistics.wrong_answers}%`, 'backgroundColor': (statistics.wrong_answers < 50) ? 'red' : (statistics.wrong_answers === 50) ? 'var(--title-background)' : 'var(--green-success)' }}></div>
+                                <div className="progress-bar" style={{ 'width': `${statistics.wrong_answers}%`, 'backgroundColor': 'red' }}></div>
                                 <div className="counter fw-bold" style={{ 'left': `calc(${statistics.wrong_answers}% - 25px)` }}>{statistics.wrong_answers}%</div>
                             </div>
                         </div>
@@ -189,7 +241,7 @@ export const QuizResults = (props) => {
                         }
                     </div>
                     <section className='quiz-sec'>
-                        <form>
+                        <form className='quiz-form'>
                             <FormControl variant="standard">
                                 {
                                     quiz.questions.map((question, index) => {
@@ -199,7 +251,7 @@ export const QuizResults = (props) => {
                                                     <div className='d-flex w-100 justify-content-start align-items-center gap-2'>
                                                         <span className='q-num'>{index + 1}-</span>
                                                         <span className='q-title d-flex gap-2 align-items-center'>
-                                                            {question.title}
+                                                            {convertNumbersToArabic(question.title)}
 
                                                         </span>
                                                         {
@@ -208,7 +260,11 @@ export const QuizResults = (props) => {
                                                         }
                                                     </div>
                                                     {
-                                                        (question.img != null) ? <div className='w-90' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${question.img}`} alt='question-image' /></div> : ''
+                                                        (question.img != null) ? <div className='w-90 question-image' onClick={
+                                                            () => {
+                                                                setDataImage({ src: `${baseURLMediaTypeImage}${question.img}`, alt: question.choice });
+                                                                setViewImageWindow(true);
+                                                            }} style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0', 'cursor': 'pointer' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${question.img}`} alt='question-image' /></div> : ''
                                                     }
                                                 </div>
                                                 <div className='choices-div'>
@@ -226,9 +282,14 @@ export const QuizResults = (props) => {
                                                                         return (
                                                                             <FormControlLabel className="right-choice revision" key={choice.id} value={choice.id} control={<TaskAltIcon sx={{ 'marginLeft': '10px' }} />} label={
                                                                                 <div className='d-flex gap-2 flex-column w-100'>
-                                                                                    {choice.choice}
+                                                                                    {convertNumbersToArabic(choice.choice)}
                                                                                     {
-                                                                                        (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${choice.img}`} alt='question-image' /></div> : ''
+                                                                                        (choice.img != null) ? <div className='w-100 choice-img' onClick={
+                                                                                            () => {
+                                                                                                setDataImage({ src: `${baseURLMediaTypeImage}${choice.img}`, alt: choice.choice });
+                                                                                                setViewImageWindow(true);
+                                                                                            }}
+                                                                                            style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0', 'cursor': 'pointer' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${choice.img}`} alt='question-image' /></div> : ''
                                                                                     }
                                                                                 </div>
                                                                             } />
@@ -237,9 +298,13 @@ export const QuizResults = (props) => {
                                                                     return (
                                                                         <FormControlLabel className="revision" sx={{ 'paddingRight': '15px !important' }} key={choice.id} value={choice.id} control={<></>} label={
                                                                             <div className='d-flex gap-2 flex-column w-100'>
-                                                                                {choice.choice}
+                                                                                {convertNumbersToArabic(choice.choice)}
                                                                                 {
-                                                                                    (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${choice.img}`} alt='question-image' /></div> : ''
+                                                                                    (choice.img != null) ? <div className='w-100 choice-img' onClick={
+                                                                                        () => {
+                                                                                            setDataImage({ src: `${baseURLMediaTypeImage}${choice.img}`, alt: choice.choice });
+                                                                                            setViewImageWindow(true);
+                                                                                        }} style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0', 'cursor': 'pointer' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${choice.img}`} alt='question-image' /></div> : ''
                                                                                 }
                                                                             </div>
                                                                         } />
@@ -250,9 +315,13 @@ export const QuizResults = (props) => {
                                                                             return (
                                                                                 <FormControlLabel className="right-choice revision" key={choice.id} value={choice.id} control={<TaskAltIcon sx={{ 'marginLeft': '10px' }} />} label={
                                                                                     <div className='d-flex gap-2 flex-column w-100'>
-                                                                                        {choice.choice}
+                                                                                        {convertNumbersToArabic(choice.choice)}
                                                                                         {
-                                                                                            (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${choice.img}`} alt='question-image' /></div> : ''
+                                                                                            (choice.img != null) ? <div className='w-100 choice-img' onClick={
+                                                                                                () => {
+                                                                                                    setDataImage({ src: `${baseURLMediaTypeImage}${choice.img}`, alt: choice.choice });
+                                                                                                    setViewImageWindow(true);
+                                                                                                }} style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0', 'cursor': 'pointer' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${choice.img}`} alt='question-image' /></div> : ''
                                                                                         }
                                                                                     </div>
                                                                                 } />
@@ -261,9 +330,13 @@ export const QuizResults = (props) => {
                                                                         return (
                                                                             <FormControlLabel className="wrong-choice revision" key={choice.id} value={choice.id} control={<HighlightOffIcon sx={{ 'marginLeft': '10px' }} />} label={
                                                                                 <div className='d-flex gap-2 flex-column w-100'>
-                                                                                    {choice.choice}
+                                                                                    {convertNumbersToArabic(choice.choice)}
                                                                                     {
-                                                                                        (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${choice.img}`} alt='question-image' /></div> : ''
+                                                                                        (choice.img != null) ? <div className='w-100 choice-img' onClick={
+                                                                                            () => {
+                                                                                                setDataImage({ src: `${baseURLMediaTypeImage}${choice.img}`, alt: choice.choice });
+                                                                                                setViewImageWindow(true);
+                                                                                            }} style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0', 'cursor': 'pointer' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${choice.img}`} alt='question-image' /></div> : ''
                                                                                     }
                                                                                 </div>
                                                                             } />
@@ -274,9 +347,13 @@ export const QuizResults = (props) => {
                                                                             return (
                                                                                 <FormControlLabel className="right-choice revision" key={choice.id} value={choice.id} control={<TaskAltIcon sx={{ 'marginLeft': '10px' }} />} label={
                                                                                     <div className='d-flex gap-2 flex-column w-100'>
-                                                                                        {choice.choice}
+                                                                                        {convertNumbersToArabic(choice.choice)}
                                                                                         {
-                                                                                            (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${choice.img}`} alt='question-image' /></div> : ''
+                                                                                            (choice.img != null) ? <div className='w-100 choice-img' onClick={
+                                                                                                () => {
+                                                                                                    setDataImage({ src: `${baseURLMediaTypeImage}${choice.img}`, alt: choice.choice });
+                                                                                                    setViewImageWindow(true);
+                                                                                                }} style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0', 'cursor': 'pointer' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${choice.img}`} alt='question-image' /></div> : ''
                                                                                         }
                                                                                     </div>
                                                                                 } />
@@ -285,9 +362,13 @@ export const QuizResults = (props) => {
                                                                         return (
                                                                             <FormControlLabel className="revision" sx={{ 'paddingRight': '15px !important' }} key={choice.id} value={choice.id} control={<></>} label={
                                                                                 <div className='d-flex gap-2 flex-column w-100'>
-                                                                                    {choice.choice}
+                                                                                    {convertNumbersToArabic(choice.choice)}
                                                                                     {
-                                                                                        (choice.img != null) ? <div className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${choice.img}`} alt='question-image' /></div> : ''
+                                                                                        (choice.img != null) ? <div className='w-100 choice-img' onClick={
+                                                                                            () => {
+                                                                                                setDataImage({ src: `${baseURLMediaTypeImage}${choice.img}`, alt: choice.choice });
+                                                                                                setViewImageWindow(true);
+                                                                                            }} style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0', 'cursor': 'pointer' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${choice.img}`} alt='question-image' /></div> : ''
                                                                                     }
                                                                                 </div>
                                                                             } />

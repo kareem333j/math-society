@@ -6,6 +6,7 @@ import LoadingGradient from '../loading/Loading2';
 import Party1 from '../party/party1';
 import { QuizResults } from './QuizResults';
 import useLocalStorage from 'use-local-storage';
+import { baseURLMediaTypeImage } from '../../Axios';
 import CloseIcon from '@mui/icons-material/Close';
 
 var timerConst = {}
@@ -98,7 +99,7 @@ function Quiz({ id, dataAuth, close_screen, full_screen }) {
     const ViewImageWindow = () => {
         if (viewImageWindow) {
             return (
-                <div className='view-image-window d-flex justify-content-center align-items-center p-0 pt-5 m-0'>
+                <div id='view-image-window' className='view-image-window d-flex justify-content-center align-items-center p-0 pt-5 m-0'>
                     <div className='close'>
                         <Tooltip title="غلق">
                             <IconButton
@@ -113,7 +114,9 @@ function Quiz({ id, dataAuth, close_screen, full_screen }) {
                             </IconButton>
                         </Tooltip>
                     </div>
-                    <img className='w-100 img' src={dataImage.src} alt={dataImage.alt} />
+                    <div className='image-div'>
+                        <img className='img' src={dataImage.src} alt={dataImage.alt} />
+                    </div>
                 </div>
             )
         }
@@ -328,7 +331,7 @@ function Quiz({ id, dataAuth, close_screen, full_screen }) {
                     is_exist: true,
                     data: null,
                 });
-                if(error.response.status === 403){
+                if (error.response.status === 403) {
                     setSeeResults(false);
                 }
             });
@@ -366,6 +369,22 @@ function Quiz({ id, dataAuth, close_screen, full_screen }) {
         }
     }, [currentTimer[`quiz_${id}`], quizStart[`quiz_${id}`]]);
 
+    function convertNumbersToArabic(text) {
+        const map = {
+            '0': '٠',
+            '1': '١',
+            '2': '٢',
+            '3': '٣',
+            '4': '٤',
+            '5': '٥',
+            '6': '٦',
+            '7': '٧',
+            '8': '٨',
+            '9': '٩'
+        };
+
+        return text.replace(/[0-9]/g, (digit) => map[digit]);
+    }
 
 
     const quizSection = () => {
@@ -401,16 +420,16 @@ function Quiz({ id, dataAuth, close_screen, full_screen }) {
                                                 <div className='d-flex w-100 justify-content-start align-items-center gap-2'>
                                                     <span className='q-num'>{index + 1}-</span>
 
-                                                    <span className='q-title'>{question.title}</span>
+                                                    <span className='q-title'>{convertNumbersToArabic(question.title)}</span>
 
                                                 </div>
                                                 {
                                                     (question.img != null) ? <div onClick={
                                                         () => {
-                                                            setDataImage({ src: `${question.img}`, alt: question.title });
+                                                            setDataImage({ src: `${baseURLMediaTypeImage}${question.img}`, alt: question.title });
                                                             setViewImageWindow(true);
                                                         }
-                                                    } className='w-90' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0', 'cursor':'pointer' }}><img className='w-100 img' src={`${question.img}`} alt='question-image' /></div> : ''
+                                                    } className='w-90 question-image' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0', 'cursor': 'pointer' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${question.img}`} alt='question-image' /></div> : ''
                                                 }
                                             </div>
                                             <div className='choices-div'>
@@ -427,15 +446,15 @@ function Quiz({ id, dataAuth, close_screen, full_screen }) {
                                                                 <>
                                                                     <FormControlLabel key={choice.id} value={choice.id} control={CustomRadio()} label={
                                                                         <div className='d-flex gap-2 flex-column w-100'>
-                                                                            {choice.choice}
+                                                                            {convertNumbersToArabic(choice.choice)}
                                                                             {
                                                                                 (choice.img != null) ? <div onClick={
                                                                                     () => {
-                                                                                        setDataImage({ src: `${choice.img}`, alt: choice.choice });
+                                                                                        setDataImage({ src: `${baseURLMediaTypeImage}${choice.img}`, alt: choice.choice });
                                                                                         setViewImageWindow(true);
                                                                                     }
                                                                                 }
-                                                                                    className='w-100' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0' }}><img className='w-100 img' src={`${choice.img}`} alt='question-image' /></div> : ''
+                                                                                    className='w-100 choice-img' style={{ 'paddingRight': '0px', 'width': '95%', 'overflow': 'hidden', 'margin': '0', 'cursor': 'pointer' }}><img className='w-100 img' src={`${baseURLMediaTypeImage}${choice.img}`} alt='question-image' /></div> : ''
                                                                             }
                                                                         </div>
                                                                     } />
@@ -471,9 +490,9 @@ function Quiz({ id, dataAuth, close_screen, full_screen }) {
         )
     } else {
         if (quizResults.is_exist === true) {
-            if(seeResults === true){
+            if (seeResults === true) {
                 return <QuizResults quiz_id={id} results={quizResults.data} full_screen={full_screen} close_screen={close_screen} />
-            }else{
+            } else {
                 return (
                     <section className='w-100 d-flex flex-column justify-content-center align-items-center p-5' style={{ 'minHeight': '40vh' }}>
                         <h3 className='text-center fw-bold mb-4' style={{ 'fontSize': '1.6em', 'color': 'var(--text-cyan-700)' }}>لم يتم الإعلان عن النتيحة بعد...</h3>

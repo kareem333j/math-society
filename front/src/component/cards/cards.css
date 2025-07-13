@@ -17,21 +17,17 @@
     overflow: hidden;
     position: relative;
 }
-/* تأثير الموجه على أحد جوانب الكارت */
+
 .exam-card .card-back::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0px;
     width: 250px;
-    /* عرض الحافة الموجهة */
     height: 100%;
     background: linear-gradient(135deg, transparent 50%, rgba(214, 203, 203, 0.551) 50%);
-    /* تأثير الموجه */
     transform: skewX(-30deg);
-    /* تعديل ميلان التأثير */
     z-index: 1;
-    /* وضع التأثير فوق الكارت */
 }
 
 
@@ -80,6 +76,7 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 10px 5px;
     transition: all 0.3s ease;
+    min-width: 320px;
 }
 .course.badge-poster{
     position: relative;
@@ -158,6 +155,15 @@
 }
 .course .price .name{
     padding: 2px 3px;
+}
+.course .course-img{
+    position: relative;
+    aspect-ratio: 16 / 9; 
+}
+.course .course-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 @media (max-width: 991px) {

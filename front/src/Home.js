@@ -75,7 +75,7 @@ function Home({ dataAuth }) {
          className='container content row d-flex align-items-center' dir='rtl'>
           <div className='data col-lg-12 col-md-12 col-12 d-flex justify-content-center align-items-center flex-column'>
             <h3 className='name fw-bold mb-4 text-center'>
-              <span style={{ 'color': 'var(--red-light)' }}>م /</span>
+              <span style={{ 'color': 'var(--red-light)' }}>مهندس</span>
               <br />
               <div className='position-relative'>
                 <div className='back-img'>
@@ -88,9 +88,9 @@ function Home({ dataAuth }) {
               <span className='ch1'>مجتمع</span>
               <span className='ch2'>الرياضيات</span>
             </h1>
-            <h5 className='slogn text-center'>مــــنصة متخــــصــــصــــة في
+            <h5 className='slogn text-center'>مــــنصة مصطفي حمدي 
               <br />
-              علم الرياضيات
+              لشرح منهج الرياضيات  
             </h5>
             <div className='actions mt-4 d-flex gap-3'>
               {(dataAuth.isAuthenticated !== true) ? <RedMainBtn to='/register' name='إشترك الأن !' /> : <RedMainBtn href='#courses' name='الكورسات !' />}
